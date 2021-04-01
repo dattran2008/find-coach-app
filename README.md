@@ -1,4 +1,4 @@
-# app
+# Find Coach app - Vue 3
 
 ## Project setup
 ```
