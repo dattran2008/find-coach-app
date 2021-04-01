@@ -43,6 +43,12 @@ typings/
 
 # IDE / Editor
 .idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # Service worker
 sw.*
