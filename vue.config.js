@@ -7,4 +7,5 @@ module.exports = {
       return args;
     });
   },
+  devServer: { port: 3000 },
 };

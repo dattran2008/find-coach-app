@@ -35,9 +35,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="success" @click="submitForm">
-        Register
-      </el-button>
+      <el-button type="success" @click="submitForm"> Register </el-button>
       <el-button @click="resetForm">Reset</el-button>
     </el-form-item>
   </el-form>
@@ -102,11 +100,19 @@ export default {
 
     const submitForm = () => {
       getRef.value.validate((valid) => {
+        const formData = {
+          firstName: data.ruleForm.firstName,
+          lastName: data.ruleForm.lastName,
+          type: data.ruleForm.type,
+          rate: data.ruleForm.rate,
+          description: data.ruleForm.description,
+        };
         if (valid) {
           getRef.value.resetFields();
           return true;
         }
-        console.log('error submit!!');
+
+        console.log('error submit!!', formData);
         return false;
       });
     };
