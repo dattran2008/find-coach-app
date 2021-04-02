@@ -13,7 +13,6 @@
           <el-checkbox id="ok" label="frontend">Front End</el-checkbox>
           <el-checkbox label="backend">Back End</el-checkbox>
           <el-checkbox label="career">Career</el-checkbox>
-          <el-checkbox label="test"></el-checkbox>
         </el-checkbox-group>
       </el-form-item>
     </el-form>

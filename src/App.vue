@@ -3,18 +3,21 @@
     <layout-header />
   </el-header>
   <el-container>
-    <el-main style="text-align: center">
+    <el-main>
       <router-view />
     </el-main>
   </el-container>
-  <el-footer>Footer</el-footer>
+  <el-footer>
+    <layout-footer></layout-footer>
+  </el-footer>
 </template>
 
 <script>
 import LayoutHeader from '@/components/layouts/Header.vue';
+import LayoutFooter from '@/components/layouts/Footer.vue';
 
 export default {
-  components: { LayoutHeader },
+  components: { LayoutHeader, LayoutFooter },
   setup() {},
 };
 </script>
@@ -29,10 +32,12 @@ export default {
 
 body {
   margin: 0;
-
-  .el-container {
-    margin-bottom: 40px;
-  }
+}
+.el-container {
+  margin-bottom: 40px;
+}
+.el-main {
+  text-align: center;
 }
 
 .el-footer {

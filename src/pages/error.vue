@@ -232,8 +232,10 @@
         </g>
       </g>
     </svg>
-    <p id="errorText">O-o-oh! Page not found.</p>
-    <a id="errorLink" href="/">Go Back</a>
+    <p class="errorText">O-o-oh! Page not found.</p>
+    <router-link to="/" class="errorLink">
+      Go Back
+    </router-link>
   </div>
 </template>
 
@@ -255,11 +257,11 @@ main {
   justify-content: center;
   align-items: center;
   font-family: 'Merriweather Sans', sans-serif;
-  #errorText {
+  .errorText {
     font-size: 22px;
     margin: 14px 0 25px;
   }
-  #errorLink {
+  .errorLink {
     font-size: 20px;
     padding: 12px;
     border: 1px solid;
