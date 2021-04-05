@@ -7,7 +7,12 @@
       <div class="btn__group">
         <el-button icon="el-icon-refresh-left" round></el-button>
         <router-link to="/register" tag="button">
-          <el-button icon="el-icon-plus" type="primary" size="medium">
+          <el-button
+            v-if="!isCoach"
+            icon="el-icon-plus"
+            type="primary"
+            size="medium"
+          >
             Register as Coach
           </el-button>
         </router-link>
@@ -31,7 +36,7 @@
 <script>
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
-import CoachItem from '@/components/coaches/item/index.vue';
+import CoachItem from '@/components/coaches/list/item/index.vue';
 import CoachFilter from '@/components/coaches/filter/index.vue';
 
 export default {
@@ -54,19 +59,27 @@ export default {
         ) {
           return true;
         }
+        if (
+          filtered.value.includes('career') &&
+          coach.areas.includes('career')
+        ) {
+          return true;
+        }
         return false;
       });
     });
     const hasCoaches = computed(() => store.getters['coaches/hasCoaches']);
+    const isCoach = computed(() => store.getters['coaches/isCoach']);
 
     const setFilter = (value) => {
       filtered.value = value;
-      console.log('Get here', filtered.value);
     };
+
     return {
       filteredCoaches,
       hasCoaches,
       setFilter,
+      isCoach,
     };
   },
 };

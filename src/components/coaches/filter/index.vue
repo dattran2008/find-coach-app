@@ -23,7 +23,7 @@
 import { reactive } from 'vue';
 
 export default {
-  setup(props, context) {
+  setup(_, context) {
     const cityOptions = ['frontend', 'backend', 'career'];
     const type = reactive({
       checkAll: false,

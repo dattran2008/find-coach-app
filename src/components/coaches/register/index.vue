@@ -45,7 +45,8 @@
 import { reactive, toRef } from 'vue';
 
 export default {
-  setup() {
+  emits: ['save-data'],
+  setup(_, context) {
     const data = reactive({
       ruleForm: {
         firstName: '',
@@ -109,10 +110,9 @@ export default {
         };
         if (valid) {
           getRef.value.resetFields();
+          context.emit('save-data', formData);
           return true;
         }
-
-        console.log('error submit!!', formData);
         return false;
       });
     };

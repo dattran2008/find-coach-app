@@ -2,11 +2,9 @@
   <el-header>
     <layout-header />
   </el-header>
-  <el-container>
-    <el-main>
-      <router-view />
-    </el-main>
-  </el-container>
+  <el-main>
+    <router-view />
+  </el-main>
   <el-footer>
     <layout-footer></layout-footer>
   </el-footer>
@@ -33,15 +31,14 @@ export default {
 body {
   margin: 0;
 }
-.el-container {
-  margin-bottom: 40px;
-}
+
 .el-main {
   text-align: center;
+  margin-bottom: 40px;
 }
 
 .el-footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   height: 50px;

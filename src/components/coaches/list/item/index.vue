@@ -3,7 +3,7 @@
     <template #header>
       <div class="card-header">
         <h3>{{ fullName }}</h3>
-        <el-space :size="medium">
+        <el-space size="medium">
           <router-link :to="coachContactLink()" tag="button">
             <el-button type="primary" plain size="large">
               Contact
