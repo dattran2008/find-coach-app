@@ -23,7 +23,7 @@ import { ref } from 'vue';
 
 export default {
   setup() {
-    const activeIndex = ref('1');
+    const activeIndex = ref('2');
     return { activeIndex };
   },
 };

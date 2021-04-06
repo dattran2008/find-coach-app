@@ -35,7 +35,7 @@ import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 export default {
-  props: ['id', 'firstName', 'lastName', 'rate', 'areas', 'description'],
+  props: ['id', 'firstName', 'lastName', 'rate', 'areas'],
   setup(props) {
     const route = useRoute();
 

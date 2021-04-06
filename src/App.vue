@@ -4,6 +4,7 @@
   </el-header>
   <el-main>
     <router-view />
+    <el-backtop target="#app"></el-backtop>
   </el-main>
   <el-footer>
     <layout-footer></layout-footer>
@@ -26,6 +27,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  /* The height minus 60 pixels here is the height of the top navigation bar. Avoid the scroll bar that comes with the browser */
+  height: calc(100vh - 60px);
+  /* Automatic display scroll bar for overflow height */
+  overflow: auto;
 }
 
 body {
@@ -35,6 +40,12 @@ body {
 .el-main {
   text-align: center;
   margin-bottom: 40px;
+
+  .el-backtop {
+    background-color: #5488c7;
+    color: #fff;
+    border-radius: 0.188rem;
+  }
 }
 
 .el-footer {

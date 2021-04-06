@@ -31,11 +31,15 @@
     </el-form-item>
 
     <el-form-item label="Description" prop="description">
-      <el-input type="textarea" v-model="data.ruleForm.description"></el-input>
+      <el-input
+        type="textarea"
+        :autosize="{ minRows: 5, maxRows: 7 }"
+        v-model="data.ruleForm.description"
+      ></el-input>
     </el-form-item>
 
     <el-form-item>
-      <el-button type="success" @click="submitForm"> Register </el-button>
+      <el-button type="success" @click="submitForm">Register</el-button>
       <el-button @click="resetForm">Reset</el-button>
     </el-form-item>
   </el-form>
@@ -64,8 +68,8 @@ export default {
           },
           {
             min: 3,
-            max: 10,
-            message: 'Length should be 3 to 10',
+            max: 20,
+            message: 'Length should be 3 to 20',
             trigger: 'blur',
           },
         ],
@@ -77,8 +81,8 @@ export default {
           },
           {
             min: 3,
-            max: 10,
-            message: 'Length should be 3 to 10',
+            max: 20,
+            message: 'Length should be 3 to 20',
             trigger: 'blur',
           },
         ],

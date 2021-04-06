@@ -5,10 +5,14 @@
   <section>
     <div class="container">
       <div class="btn__group">
-        <el-button icon="el-icon-refresh-left" round></el-button>
+        <el-button
+          icon="el-icon-refresh-left"
+          round
+          @click="fetchCoaches"
+        ></el-button>
         <router-link to="/register" tag="button">
           <el-button
-            v-if="!isCoach"
+            v-if="!isCoach && !isLoading"
             icon="el-icon-plus"
             type="primary"
             size="medium"
@@ -18,7 +22,10 @@
         </router-link>
       </div>
     </div>
-    <div class="list" v-if="hasCoaches">
+    <div v-if="isLoading">
+      <h1>.........Loading!!!!!!!!</h1>
+    </div>
+    <div class="list" v-else-if="hasCoaches">
       <coach-item
         v-for="coach in filteredCoaches"
         :key="coach.id"
@@ -34,7 +41,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import CoachItem from '@/components/coaches/list/item/index.vue';
 import CoachFilter from '@/components/coaches/filter/index.vue';
@@ -44,6 +51,18 @@ export default {
   setup() {
     const store = useStore();
     const filtered = ref('');
+    const isLoading = ref(false);
+
+    // load data
+    const fetchCoaches = async () => {
+      isLoading.value = true;
+      await store.dispatch('coaches/fetchCoaches');
+      isLoading.value = false;
+    };
+    const hasCoaches = computed(() => store.getters['coaches/hasCoaches']);
+    const isCoach = computed(() => store.getters['coaches/isCoach']);
+
+    // handle filter action
     const filteredCoaches = computed(() => {
       const coaches = store.getters['coaches/coaches'];
       return coaches.filter((coach) => {
@@ -68,18 +87,21 @@ export default {
         return false;
       });
     });
-    const hasCoaches = computed(() => store.getters['coaches/hasCoaches']);
-    const isCoach = computed(() => store.getters['coaches/isCoach']);
-
     const setFilter = (value) => {
       filtered.value = value;
     };
 
+    onMounted(async () => {
+      await fetchCoaches();
+    });
+
     return {
-      filteredCoaches,
-      hasCoaches,
-      setFilter,
       isCoach,
+      isLoading,
+      hasCoaches,
+      filteredCoaches,
+      setFilter,
+      fetchCoaches,
     };
   },
 };
