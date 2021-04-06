@@ -5,8 +5,7 @@
         <h3>{{ fullName }}</h3>
         <el-space size="medium">
           <router-link :to="coachContactLink()" tag="button">
-            <el-button type="primary" plain size="large">
-              Contact
+            <el-button type="primary" plain size="large" icon="el-icon-message">
             </el-button>
           </router-link>
           <router-link :to="coachDetailLink()" tag="button">
@@ -23,7 +22,7 @@
         :key="area"
         type="info"
         effect="dark"
-        style="margin-right: 8px;"
+        style="margin-right: 8px"
       >
         {{ area }}
       </el-tag>

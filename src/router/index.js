@@ -9,7 +9,7 @@ import CoachRegister from '@/pages/coaches/CoachRegister.vue';
 
 // requests
 import ContactCoach from '@/pages/requests/ContactCoach.vue';
-import RequestsReceived from '@/pages/requests/RequestsReceived.vue';
+import RequestsReceived from '@/pages/requests/RequestList.vue';
 
 import ErrorPages from '@/pages/error.vue';
 
