@@ -44,6 +44,7 @@ export default {
 
     const coachContactLink = () => `${route.path}/${props.id}/contact`;
     const coachDetailLink = () => `${route.path}/${props.id}`;
+
     return {
       fullName,
       coachContactLink,

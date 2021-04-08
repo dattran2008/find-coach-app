@@ -15,5 +15,12 @@ module.exports = {
     camelcase: ['error', { properties: 'always' }],
     'operator-linebreak': ['error', 'after'],
     'max-len': ['error', { code: 200 }],
+    'object-curly-newline': [
+      'error',
+      {
+        ImportDeclaration: { multiline: true, minProperties: 10 },
+        ExportDeclaration: 'never',
+      },
+    ],
   },
 };

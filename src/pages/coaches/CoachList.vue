@@ -6,9 +6,15 @@
     <div class="container">
       <div class="btn__group">
         <el-button
+          v-if="isRefreshed && isLoading"
+          icon="el-icon-loading"
+          round
+        ></el-button>
+        <el-button
+          v-else
           icon="el-icon-refresh-left"
           round
-          @click="fetchCoaches"
+          @click="handleRefresh"
         ></el-button>
         <router-link to="/register" tag="button">
           <el-button
@@ -22,9 +28,11 @@
         </router-link>
       </div>
     </div>
-    <div v-if="isLoading">
-      <h1>.........Loading!!!!!!!!</h1>
-    </div>
+    <div
+      v-if="isLoading"
+      v-loading="isLoading"
+      element-loading-text="Loading...."
+    ></div>
     <div class="list" v-else-if="hasCoaches">
       <coach-item
         v-for="coach in filteredCoaches"
@@ -36,72 +44,96 @@
         :areas="coach.areas"
       />
     </div>
-    <h1 v-else>No data found</h1>
+    <el-empty v-else :image-size="200"></el-empty>
   </section>
 </template>
 
 <script>
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import CoachItem from '@/components/coaches/list/item/index.vue';
 import CoachFilter from '@/components/coaches/filter/index.vue';
+import { ElNotification as notify } from 'element-plus';
 
 export default {
-  components: { CoachItem, CoachFilter },
+  components: {
+    CoachItem,
+    CoachFilter,
+  },
   setup() {
     const store = useStore();
     const filtered = ref('');
     const isLoading = ref(false);
+    const isRefreshed = ref(false);
 
-    // load data
+    // Get data from api
     const fetchCoaches = async () => {
       isLoading.value = true;
-      await store.dispatch('coaches/fetchCoaches');
+      try {
+        await store.dispatch('coaches/fetchCoaches');
+      } catch (error) {
+        notify.error({
+          title: 'Error',
+          message: error.message || 'Something went wrong!',
+          customClass: 'text',
+        });
+      }
       isLoading.value = false;
     };
+
+    // Getters
     const hasCoaches = computed(() => store.getters['coaches/hasCoaches']);
     const isCoach = computed(() => store.getters['coaches/isCoach']);
 
-    // handle filter action
+    // Handle actions
     const filteredCoaches = computed(() => {
       const coaches = store.getters['coaches/coaches'];
-      return coaches.filter((coach) => {
-        if (
-          filtered.value.includes('frontend') &&
-          coach.areas.includes('frontend')
-        ) {
-          return true;
-        }
-        if (
-          filtered.value.includes('backend') &&
-          coach.areas.includes('backend')
-        ) {
-          return true;
-        }
-        if (
-          filtered.value.includes('career') &&
-          coach.areas.includes('career')
-        ) {
-          return true;
-        }
-        return false;
-      });
+      if (filtered.value.length >= 1) {
+        return coaches.filter((coach) => {
+          if (
+            filtered.value.includes('frontend') &&
+            coach.areas.includes('frontend')
+          ) {
+            return true;
+          }
+          if (
+            filtered.value.includes('backend') &&
+            coach.areas.includes('backend')
+          ) {
+            return true;
+          }
+          if (
+            filtered.value.includes('career') &&
+            coach.areas.includes('career')
+          ) {
+            return true;
+          }
+          return false;
+        });
+      }
+      return coaches;
     });
+
     const setFilter = (value) => {
       filtered.value = value;
     };
 
-    onMounted(async () => {
-      await fetchCoaches();
-    });
+    const handleRefresh = () => {
+      fetchCoaches();
+      isRefreshed.value = true;
+    };
+
+    // Hooks
+    fetchCoaches();
 
     return {
       isCoach,
       isLoading,
+      isRefreshed,
       hasCoaches,
       filteredCoaches,
       setFilter,
-      fetchCoaches,
+      handleRefresh,
     };
   },
 };
@@ -123,5 +155,10 @@ export default {
 .btn__group {
   display: flex;
   justify-content: space-between;
+}
+
+.text {
+  font-size: 30px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 </style>

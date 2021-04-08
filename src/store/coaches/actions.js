@@ -29,13 +29,13 @@ export default {
 
   async fetchCoaches(context) {
     const response = await fetch(
-      'https://get-your-trainer-default-rtdb.firebaseio.com/coaches.json',
+      'https://get-your-trainer-default-rtdb.firebaseio.com/coaches.jso',
     );
 
     const responseData = await response.json();
-
     if (!response.ok) {
-      // TODO
+      const err = new Error(responseData.message || 'Failed to fetch!');
+      throw err;
     }
 
     const coaches = [];

@@ -1,6 +1,10 @@
 <template>
   <h1>Profile</h1>
-  <detail :selectedCoach="selectedCoach" @go-back="handleGoBack" />
+  <detail
+    :selectedCoach="selectedCoach"
+    :isLoading="isLoading"
+    @go-back="handleGoBack"
+  />
   <el-divider>
     <i class="el-icon-star-on"></i>
     <i class="el-icon-star-on"></i>
@@ -18,6 +22,7 @@
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import Detail from '@/components/coaches/list/detail/index.vue';
+import { ref, onUpdated, computed } from 'vue';
 
 export default {
   props: ['id'],
@@ -26,18 +31,31 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
+    const isLoading = ref(true);
 
-    const selectedCoach = store.getters['coaches/coaches'].find(
-      (coach) => coach.id === props.id,
-    );
+    // load data from api
+    store.dispatch('coaches/fetchCoaches');
+
+    // filtered data
+    const selectedCoach = computed(() => {
+      const result = store.getters['coaches/coaches'].find(
+        (coach) => coach.id === props.id,
+      );
+      return result;
+    });
+
+    onUpdated(() => {
+      isLoading.value = false;
+    });
 
     const contactLink = () => router.replace(`${route.path}/contact`);
     const handleGoBack = () => router.push('/coaches');
 
     return {
-      selectedCoach,
       contactLink,
       handleGoBack,
+      isLoading,
+      selectedCoach,
     };
   },
 };

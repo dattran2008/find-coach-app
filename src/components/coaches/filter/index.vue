@@ -24,25 +24,25 @@ import { reactive } from 'vue';
 
 export default {
   setup(_, context) {
-    const cityOptions = ['frontend', 'backend', 'career'];
+    const areas = ['frontend', 'backend', 'career'];
     const type = reactive({
       checkAll: false,
-      filters: ['frontend', 'backend', 'career'],
-      cities: cityOptions,
+      filters: [],
+      expertise: areas,
       isIndeterminate: true,
     });
 
     const handleCheckAllChange = (value) => {
-      type.filters = value ? cityOptions : [];
+      type.filters = value ? areas : [];
       type.isIndeterminate = false;
       context.emit('coach-filter', type.filters);
     };
 
     function setFilter(value) {
       const checkedCount = value.length;
-      type.checkAll = checkedCount === type.cities.length;
+      type.checkAll = checkedCount === type.expertise.length;
       type.isIndeterminate =
-        checkedCount > 0 && checkedCount < type.cities.length;
+        checkedCount > 0 && checkedCount < type.expertise.length;
       context.emit('coach-filter', value);
     }
 
@@ -50,7 +50,6 @@ export default {
       type,
       setFilter,
       handleCheckAllChange,
-      cityOptions,
     };
   },
 };

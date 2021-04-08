@@ -8,22 +8,45 @@
     active-text-color="#ffd04b"
     :router="true"
   >
-    <el-menu-item index="1" :route="{ path: '/' }"> Home Center</el-menu-item>
-    <el-menu-item index="2" :route="{ path: '/coaches' }">
+    <el-menu-item index="0" :route="{ path: '/' }"> Home Center</el-menu-item>
+    <el-menu-item index="1" :route="{ path: '/coaches' }">
       All Coaches
     </el-menu-item>
-    <el-menu-item index="3" :route="{ path: '/requests' }">
+    <el-menu-item index="2" :route="{ path: '/requests' }">
       Requests
     </el-menu-item>
   </el-menu>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default {
   setup() {
-    const activeIndex = ref('2');
+    const route = useRoute();
+    const paths = ['/coaches', '/requests'];
+
+    const activeIndex = computed(() => {
+      let selected = '';
+      if (route.path.length > 1) {
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < paths.length; i++) {
+          if (route.path.includes(paths[i])) {
+            selected = i + 1;
+            break;
+          }
+        }
+      } else {
+        selected = 0;
+      }
+      return selected.toString();
+    });
+
+    // watchEffect(() => {
+    //   activeIndex.value = route.path;
+    // });
+
     return { activeIndex };
   },
 };
