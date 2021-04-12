@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import RequestItem from '@/components/requests/item/index.vue';
 
@@ -29,7 +30,8 @@ export default {
   components: { RequestItem },
   setup() {
     const store = useStore();
-    const data = store.getters['requests/requests'];
+    store.dispatch('requests/fetchMessage');
+    const data = computed(() => store.getters['requests/requests']);
 
     return { data };
   },

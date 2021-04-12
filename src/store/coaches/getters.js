@@ -10,4 +10,9 @@ export default {
     const { userId } = rootGetters;
     return coaches.some((coach) => coach.id === userId);
   },
+  shouldLoad(state) {
+    const lastTime = state.lastFetch;
+    const current = new Date().getTime();
+    return (current - lastTime) / 1000 > 300; // greater than 5 minute -> auto update
+  },
 };

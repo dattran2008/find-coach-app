@@ -1,4 +1,5 @@
-/* eslint-disable no-restricted-syntax */
+import axios from '@/utils/axios';
+
 export default {
   async registerCoach(context, data) {
     const { userId } = context.rootGetters;
@@ -17,6 +18,8 @@ export default {
       },
     );
 
+    // const response = await axios.post(`/${userId}.json`, coachData);
+
     if (!response.ok) {
       // TODO
     }
@@ -27,20 +30,22 @@ export default {
     });
   },
 
-  async fetchCoaches(context) {
-    const response = await fetch(
-      'https://get-your-trainer-default-rtdb.firebaseio.com/coaches.json',
-    );
+  async fetchCoaches(context, payload) {
+    const { isRefresh } = payload || {};
+    // caching data without load data everytime
+    if (!isRefresh && !context.getters.shouldLoad) {
+      return false;
+    }
 
-    const responseData = await response.json();
-    if (!response.ok) {
+    const response = await axios.get('/coaches.json');
+    const responseData = await response.data;
+    if (response.statusText !== 'OK') {
       const err = new Error(responseData.message || 'Failed to fetch!');
       throw err;
     }
 
     const coaches = [];
-    // eslint-disable-next-line guard-for-in
-    for (const key in responseData) {
+    Object.keys(responseData).map((key) => {
       const coach = {
         id: key,
         firstName: responseData[key].firstName,
@@ -49,9 +54,11 @@ export default {
         hourlyRate: responseData[key].hourlyRate,
         areas: responseData[key].areas,
       };
-      coaches.push(coach);
-    }
+      return coaches.push(coach);
+    });
 
     context.commit('setCoaches', coaches);
+    context.commit('setFetchTimeStamp');
+    return response;
   },
 };

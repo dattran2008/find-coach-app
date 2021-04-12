@@ -31,6 +31,8 @@ import {
   ElCheckboxGroup,
   ElInput,
   ElInputNumber,
+  ElCollapseItem,
+  ElCollapse,
 } from 'element-plus';
 
 export default [
@@ -61,6 +63,8 @@ export default [
   ElCheckboxGroup,
   ElInput,
   ElInputNumber,
+  ElCollapse,
+  ElCollapseItem,
 ];
 
 export const plugins = [

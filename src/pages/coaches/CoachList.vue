@@ -65,12 +65,16 @@ export default {
     const filtered = ref('');
     const isLoading = ref(false);
     const isRefreshed = ref(false);
+    const status = ref(null);
 
     // Get data from api
-    const fetchCoaches = async () => {
+    const fetchCoaches = async (refresh = false) => {
       isLoading.value = true;
       try {
-        await store.dispatch('coaches/fetchCoaches');
+        const result = await store.dispatch('coaches/fetchCoaches', {
+          isRefresh: refresh,
+        });
+        status.value = result.status;
       } catch (error) {
         notify.error({
           title: 'Error',
@@ -114,12 +118,20 @@ export default {
       return coaches;
     });
 
+    // handle click filter
     const setFilter = (value) => {
       filtered.value = value;
     };
 
-    const handleRefresh = () => {
-      fetchCoaches();
+    // handle click refresh
+    const handleRefresh = async () => {
+      await fetchCoaches(true);
+      if (status.value === 200) {
+        notify.success({
+          title: 'Success',
+          message: 'Data is refreshed!',
+        });
+      }
       isRefreshed.value = true;
     };
 
