@@ -29,7 +29,7 @@ export default {
 
   async fetchCoaches(context) {
     const response = await fetch(
-      'https://get-your-trainer-default-rtdb.firebaseio.com/coaches.jso',
+      'https://get-your-trainer-default-rtdb.firebaseio.com/coaches.json',
     );
 
     const responseData = await response.json();

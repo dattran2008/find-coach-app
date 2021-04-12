@@ -1,17 +1,25 @@
+/* eslint-disable implicit-arrow-linebreak */
 import { createRouter, createWebHistory } from 'vue-router';
-// homepage
-import Home from '@/pages/index.vue';
+
+// homepage & error
+const Home = () => import(/* webpackChunkName: "home" */ '@/pages/index.vue');
+const ErrorPages = () => import('@/pages/error.vue');
 
 // coaches
-import CoachDetail from '@/pages/coaches/CoachDetail.vue';
-import CoachList from '@/pages/coaches/CoachList.vue';
-import CoachRegister from '@/pages/coaches/CoachRegister.vue';
+const CoachDetail = () =>
+  import(/* webpackChunkName: "detail" */ '@/pages/coaches/CoachDetail.vue');
+const CoachList = () =>
+  import(/* webpackChunkName: "coaches" */ '@/pages/coaches/CoachList.vue');
+const CoachRegister = () =>
+  import(
+    /* webpackChunkName: "register" */ '@/pages/coaches/CoachRegister.vue'
+  );
 
 // requests
-import ContactCoach from '@/pages/requests/ContactCoach.vue';
-import RequestsReceived from '@/pages/requests/RequestList.vue';
-
-import ErrorPages from '@/pages/error.vue';
+const ContactCoach = () =>
+  import(/* webpackChunkName: "contact" */ '@/pages/requests/ContactCoach.vue');
+const RequestsReceived = () =>
+  import(/* webpackChunkName: "requests" */ '@/pages/requests/RequestList.vue');
 
 const routes = [
   {
@@ -27,12 +35,6 @@ const routes = [
     children: [{ path: 'contact', component: ContactCoach }],
   },
   { path: '/register', component: CoachRegister },
-  {
-    path: '/about',
-    name: 'About',
-    // which is lazy-loaded when the route is visited.
-    component: () => import('@/pages/About.vue'),
-  },
   { path: '/requests', component: RequestsReceived },
   { path: '/:notFound(.*)', component: ErrorPages },
 ];
