@@ -21,10 +21,10 @@
 </template>
 
 <script>
+import { ref, onUpdated, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import Detail from '@/components/coaches/list/detail/index.vue';
-import { ref, onUpdated, computed } from 'vue';
 
 export default {
   props: ['id'],

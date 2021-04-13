@@ -45,11 +45,10 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, inject } from 'vue';
 import { useStore } from 'vuex';
 import CoachItem from '@/components/coaches/list/item/index.vue';
 import CoachFilter from '@/components/coaches/filter/index.vue';
-import { ElNotification as notify } from 'element-plus';
 
 export default {
   components: {
@@ -58,6 +57,8 @@ export default {
   },
   setup() {
     const store = useStore();
+    const { $notify } = inject('plugins');
+
     const filtered = ref('');
     const isLoading = ref(false);
     const isRefreshed = ref(false);
@@ -72,7 +73,7 @@ export default {
         });
         status.value = result.status;
       } catch (error) {
-        notify.error({
+        $notify.error({
           title: 'Error',
           message: error.message || 'Something went wrong!',
           customClass: 'text',
@@ -123,7 +124,7 @@ export default {
     const handleRefresh = async () => {
       await fetchCoaches(true);
       if (status.value === 200) {
-        notify.success({
+        $notify.success({
           title: 'Success',
           message: 'Data is refreshed!',
         });

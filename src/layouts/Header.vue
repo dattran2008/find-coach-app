@@ -8,6 +8,12 @@
     background-color="#545c64"
     :router="true"
   >
+    <el-menu-item class="title">
+      <template #title>
+        <span> Find my coach </span>
+      </template>
+      <el-image style="height: 100px" :src="url" fit="cover"></el-image>
+    </el-menu-item>
     <el-menu-item index="0" :route="{ path: '/' }"> Home Center</el-menu-item>
     <el-menu-item index="1" :route="{ path: '/coaches' }">
       All Coaches
@@ -21,6 +27,7 @@
 <script>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import Logo from '@/assets/images/coach.svg';
 
 export default {
   setup() {
@@ -42,14 +49,25 @@ export default {
       }
       return selected.toString();
     });
-
+    const url = Logo;
     // watchEffect(() => {
     //   activeIndex.value = route.path;
     // });
 
-    return { activeIndex };
+    return { activeIndex, url };
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.title {
+  width: 400px;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+
+  span {
+    margin-left: 10px;
+  }
+}
+</style>

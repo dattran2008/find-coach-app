@@ -6,8 +6,6 @@ import router from './router';
 import store from './store';
 
 const app = createApp(App);
-app.use(store).use(router);
-
 components.forEach((component) => {
   app.component(component.name, component);
 });
@@ -15,5 +13,8 @@ components.forEach((component) => {
 plugins.forEach((plugin) => {
   app.use(plugin);
 });
+
+app.provide('plugins', app.config.globalProperties);
+app.use(store).use(router);
 
 app.mount('#app');

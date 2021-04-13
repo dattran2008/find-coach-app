@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import LayoutHeader from '@/components/layouts/Header.vue';
-import LayoutFooter from '@/components/layouts/Footer.vue';
+import LayoutHeader from '@/layouts/Header.vue';
+import LayoutFooter from '@/layouts/Footer.vue';
 
 export default {
   components: { LayoutHeader, LayoutFooter },

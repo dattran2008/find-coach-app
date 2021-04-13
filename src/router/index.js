@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 // homepage & error
 const Home = () => import(/* webpackChunkName: "home" */ '@/pages/index.vue');
-const ErrorPages = () => import('@/pages/error.vue');
+const ErrorPages = () => import('@/layouts/error.vue');
 
 // coaches
 const CoachDetail = () =>

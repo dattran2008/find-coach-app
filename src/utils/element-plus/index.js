@@ -33,6 +33,7 @@ import {
   ElInputNumber,
   ElCollapseItem,
   ElCollapse,
+  ElImage,
 } from 'element-plus';
 
 export default [
@@ -65,6 +66,7 @@ export default [
   ElInputNumber,
   ElCollapse,
   ElCollapseItem,
+  ElImage,
 ];
 
 export const plugins = [

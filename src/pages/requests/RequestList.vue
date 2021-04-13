@@ -4,7 +4,12 @@
     <el-badge :value="data.length" :max="10" class="item">
       <el-button plain size="medium">New Request</el-button>
     </el-badge>
-    <div class="collapse" v-if="data.length > 0">
+    <div
+      v-if="isLoading"
+      v-loading="isLoading"
+      element-loading-text="Loading...."
+    ></div>
+    <div class="collapse" v-else-if="data.length > 0">
       <request-item
         v-for="item in data"
         :key="item.id"
@@ -22,7 +27,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref, onBeforeUpdate } from 'vue';
 import { useStore } from 'vuex';
 import RequestItem from '@/components/requests/item/index.vue';
 
@@ -30,10 +35,27 @@ export default {
   components: { RequestItem },
   setup() {
     const store = useStore();
-    store.dispatch('requests/fetchMessage');
+    const isLoading = ref(true);
+
+    // Get data from api
+    const fetchMessage = async () => {
+      try {
+        await store.dispatch('requests/fetchMessage');
+      } catch (error) {
+        setTimeout(() => {
+          isLoading.value = false;
+        }, 4000);
+      }
+    };
+
     const data = computed(() => store.getters['requests/requests']);
 
-    return { data };
+    fetchMessage();
+    onBeforeUpdate(() => {
+      isLoading.value = false;
+    });
+
+    return { data, isLoading };
   },
 };
 </script>

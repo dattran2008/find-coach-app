@@ -46,5 +46,6 @@ export default {
     }
 
     context.commit('setMessage', messages);
+    return response;
   },
 };
