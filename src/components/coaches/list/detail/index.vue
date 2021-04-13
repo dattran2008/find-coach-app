@@ -22,7 +22,7 @@
           >
             {{ area }}
           </el-tag>
-          <p>{{ selectedCoach.description }}</p>
+          <p>{{ selectedCoach.description || 'No description' }}</p>
           <div class="bottom">
             <time class="time">
               <h3>Cost: ${{ selectedCoach.hourlyRate }}/hour</h3>

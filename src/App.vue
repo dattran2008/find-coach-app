@@ -3,7 +3,11 @@
     <layout-header />
   </el-header>
   <el-main>
-    <router-view />
+    <router-view v-slot="slot">
+      <transition name="el-fade-in-linear">
+        <component :is="slot.Component"></component>
+      </transition>
+    </router-view>
     <el-backtop target="#app"></el-backtop>
   </el-main>
   <el-footer>

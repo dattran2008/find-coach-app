@@ -1,11 +1,11 @@
 <template>
   <el-menu
-    :default-active="activeIndex"
     class="el-menu-demo"
     mode="horizontal"
-    background-color="#545c64"
-    text-color="#fff"
+    :default-active="activeIndex"
     active-text-color="#ffd04b"
+    text-color="#fff"
+    background-color="#545c64"
     :router="true"
   >
     <el-menu-item index="0" :route="{ path: '/' }"> Home Center</el-menu-item>

@@ -1,21 +1,23 @@
 <template>
-  <h1>Profile</h1>
-  <detail
-    :selectedCoach="selectedCoach"
-    :isLoading="isLoading"
-    @go-back="handleGoBack"
-  />
-  <el-divider>
-    <i class="el-icon-star-on"></i>
-    <i class="el-icon-star-on"></i>
-    <i class="el-icon-star-on"></i>
-  </el-divider>
-  <div class="contact" v-if="selectedCoach">
-    <h1 class="title">Contact Us</h1>
-    <h3>Interested? Reach out now</h3>
-    <el-button plain @click="contactLink">Start Here</el-button>
-  </div>
-  <router-view></router-view>
+  <section>
+    <h1>Profile</h1>
+    <detail
+      :selectedCoach="selectedCoach"
+      :isLoading="isLoading"
+      @go-back="handleGoBack"
+    />
+    <el-divider>
+      <i class="el-icon-star-on"></i>
+      <i class="el-icon-star-on"></i>
+      <i class="el-icon-star-on"></i>
+    </el-divider>
+    <div class="contact" v-if="selectedCoach">
+      <h1 class="title">Contact Us</h1>
+      <h3>Interested? Reach out now</h3>
+      <el-button plain @click="contactLink">Start Here</el-button>
+    </div>
+    <router-view></router-view>
+  </section>
 </template>
 
 <script>
@@ -34,7 +36,7 @@ export default {
     const isLoading = ref(true);
 
     // load data from api
-    store.dispatch('coaches/fetchCoaches');
+    store.dispatch('coaches/fetchCoaches', { isRefresh: true });
 
     // filtered data
     const selectedCoach = computed(() => {

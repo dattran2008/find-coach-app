@@ -1,6 +1,8 @@
 <template>
-  <h1>Contact a coach</h1>
-  <contact-form @send-message="sendMessage" />
+  <el-main>
+    <h1>Contact a coach</h1>
+    <contact-form @send-message="sendMessage" />
+  </el-main>
 </template>
 
 <script>

@@ -3,7 +3,7 @@
     :model="data.ruleForm"
     :rules="data.rules"
     ref="getRef"
-    label-width="200px"
+    label-width="140px"
     class="demo-ruleForm"
   >
     <el-form-item label="First Name" prop="firstName">

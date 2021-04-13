@@ -33,15 +33,17 @@ export default {
     }
 
     const messages = [];
-    Object.keys(responseData).map((key) => {
-      const request = {
-        id: key,
-        coachId,
-        email: responseData[key].email,
-        message: responseData[key].message,
-      };
-      return messages.push(request);
-    });
+    if (responseData) {
+      Object.keys(responseData).map((key) => {
+        const request = {
+          id: key,
+          coachId,
+          email: responseData[key].email,
+          message: responseData[key].message,
+        };
+        return messages.push(request);
+      });
+    }
 
     context.commit('setMessage', messages);
   },

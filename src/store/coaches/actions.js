@@ -45,17 +45,19 @@ export default {
     }
 
     const coaches = [];
-    Object.keys(responseData).map((key) => {
-      const coach = {
-        id: key,
-        firstName: responseData[key].firstName,
-        lastName: responseData[key].lastName,
-        description: responseData[key].desc,
-        hourlyRate: responseData[key].hourlyRate,
-        areas: responseData[key].areas,
-      };
-      return coaches.push(coach);
-    });
+    if (responseData) {
+      Object.keys(responseData).map((key) => {
+        const coach = {
+          id: key,
+          firstName: responseData[key].firstName,
+          lastName: responseData[key].lastName,
+          description: responseData[key].description,
+          hourlyRate: responseData[key].hourlyRate,
+          areas: responseData[key].areas,
+        };
+        return coaches.push(coach);
+      });
+    }
 
     context.commit('setCoaches', coaches);
     context.commit('setFetchTimeStamp');

@@ -1,32 +1,28 @@
 <template>
   <section class="container">
     <coach-filter @coach-filter="setFilter" />
-  </section>
-  <section>
-    <div class="container">
-      <div class="btn__group">
+    <div class="btn__group">
+      <el-button
+        v-if="isRefreshed && isLoading"
+        icon="el-icon-loading"
+        round
+      ></el-button>
+      <el-button
+        v-else
+        icon="el-icon-refresh-left"
+        round
+        @click="handleRefresh"
+      ></el-button>
+      <router-link to="/register" tag="button">
         <el-button
-          v-if="isRefreshed && isLoading"
-          icon="el-icon-loading"
-          round
-        ></el-button>
-        <el-button
-          v-else
-          icon="el-icon-refresh-left"
-          round
-          @click="handleRefresh"
-        ></el-button>
-        <router-link to="/register" tag="button">
-          <el-button
-            v-if="!isCoach && !isLoading"
-            icon="el-icon-plus"
-            type="primary"
-            size="medium"
-          >
-            Register as Coach
-          </el-button>
-        </router-link>
-      </div>
+          v-if="!isCoach && !isLoading"
+          icon="el-icon-plus"
+          type="primary"
+          size="medium"
+        >
+          Register as Coach
+        </el-button>
+      </router-link>
     </div>
     <div
       v-if="isLoading"

@@ -29,7 +29,7 @@ const routes = [
   },
   { path: '/coaches', component: CoachList },
   {
-    path: '/coaches/:id',
+    path: '/coaches/:id([a-z]\\d+)',
     component: CoachDetail,
     props: true,
     children: [{ path: 'contact', component: ContactCoach }],
