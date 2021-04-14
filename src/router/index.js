@@ -1,6 +1,9 @@
 /* eslint-disable implicit-arrow-linebreak */
 import { createRouter, createWebHistory } from 'vue-router';
 
+// authentication
+const UserAuth = () => import('@/pages/auth/UserAuth.vue');
+
 // homepage & error
 const Home = () => import(/* webpackChunkName: "home" */ '@/pages/index.vue');
 const ErrorPages = () => import('@/layouts/error.vue');
@@ -36,6 +39,7 @@ const routes = [
   },
   { path: '/register', component: CoachRegister },
   { path: '/requests', component: RequestsReceived },
+  { path: '/auth', component: UserAuth },
   { path: '/:notFound(.*)', component: ErrorPages },
 ];
 

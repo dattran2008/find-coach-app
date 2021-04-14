@@ -4,6 +4,7 @@
     :rules="data.rules"
     ref="getRef"
     label-width="100px"
+    status-icon
   >
     <el-form-item label="Email" prop="email">
       <el-input v-model="data.form.email"></el-input>
@@ -13,6 +14,8 @@
         type="textarea"
         :autosize="{ minRows: 5, maxRows: 8 }"
         v-model="data.form.message"
+        maxlength="500"
+        show-word-limit
       ></el-input>
     </el-form-item>
     <el-button round type="info" @click="submitForm"> Send Message </el-button>
@@ -35,25 +38,37 @@ export default {
         email: [
           {
             required: true,
-            message: 'Please input email address',
             trigger: 'blur',
+            type: 'email',
+            validator(rule, value, callback) {
+              const message = 'Email address is required!';
+              if (!value) {
+                return callback(new Error(message));
+              }
+              return callback();
+            },
           },
           {
             type: 'email',
-            message: 'Please input correct email address',
             trigger: 'blur',
+            message: 'Please input correct email address',
           },
         ],
         message: {
           required: true,
-          message: 'Please leave your message....',
           trigger: 'blur',
+          validator(rule, value, callback) {
+            if (!value) {
+              return callback(new Error('Please leave something bruhhhhh!!!'));
+            }
+            return callback();
+          },
         },
       },
     });
     const getRef = toRef(data, 'getRef');
 
-    function submitForm() {
+    const submitForm = () => {
       // eslint-disable-next-line consistent-return
       getRef.value.validate((valid) => {
         const formData = {
@@ -67,7 +82,7 @@ export default {
           return false;
         }
       });
-    }
+    };
 
     return { data, getRef, submitForm };
   },

@@ -4,7 +4,7 @@
     :rules="data.rules"
     ref="getRef"
     label-width="140px"
-    class="demo-ruleForm"
+    status-icon
   >
     <el-form-item label="First Name" prop="firstName">
       <el-input v-model="data.ruleForm.firstName"></el-input>
@@ -35,6 +35,8 @@
         type="textarea"
         :autosize="{ minRows: 5, maxRows: 7 }"
         v-model="data.ruleForm.description"
+        maxlength="1000"
+        show-word-limit
       ></el-input>
     </el-form-item>
 
@@ -63,21 +65,31 @@ export default {
         firstName: [
           {
             required: true,
-            message: 'Please input your first name',
             trigger: 'blur',
-          },
-          {
-            min: 3,
-            max: 20,
-            message: 'Length should be 3 to 20',
-            trigger: 'blur',
+            pattern: /^[a-zA-Z]+$/,
+            validator(rule, value, callback) {
+              const requiredMessage = 'Please input your first name';
+              const lenMessage = 'Length should be 1 to 20';
+              const invalidMessage =
+                'No special characters or numbers are allowed here!';
+              if (!value) {
+                return callback(new Error(requiredMessage));
+              }
+              if (value.length < 1 || value.length > 20) {
+                return callback(new Error(lenMessage));
+              }
+              if (!rule.pattern.test(value)) {
+                return callback(new Error(invalidMessage));
+              }
+              return callback();
+            },
           },
         ],
         lastName: [
           {
             required: true,
             message: 'Please input your first name',
-            trigger: 'change',
+            trigger: 'blur',
           },
           {
             min: 3,
@@ -115,7 +127,6 @@ export default {
         if (valid) {
           getRef.value.resetFields();
           context.emit('save-data', formData);
-          return true;
         }
         return false;
       });

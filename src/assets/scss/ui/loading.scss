@@ -2,3 +2,9 @@
   height: 200px;
   margin-top: 50px;
 }
+
+.el-input {
+  &__suffix {
+    color: #42b983;
+  }
+}

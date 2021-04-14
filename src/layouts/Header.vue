@@ -21,6 +21,7 @@
     <el-menu-item index="2" :route="{ path: '/requests' }">
       Requests
     </el-menu-item>
+    <el-menu-item index="3" :route="{ path: '/auth' }">Login</el-menu-item>
   </el-menu>
 </template>
 
@@ -32,7 +33,7 @@ import Logo from '@/assets/images/coach.svg';
 export default {
   setup() {
     const route = useRoute();
-    const paths = ['/coaches', '/requests'];
+    const paths = ['/coaches', '/requests', '/auth'];
 
     const activeIndex = computed(() => {
       let selected = '';
@@ -61,13 +62,14 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-  width: 400px;
+  width: 450px;
   display: flex;
   align-items: center;
   font-size: 20px;
+  font-family: 'Courier New', Courier, monospace;
 
   span {
-    margin-left: 10px;
+    margin: 0 15px 0 10px;
   }
 }
 </style>
