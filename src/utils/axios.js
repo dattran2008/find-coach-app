@@ -10,7 +10,7 @@ import axios from 'axios';
 // }
 
 const instance = axios.create({
-  baseURL: 'https://get-your-trainer-default-rtdb.firebaseio.com', // Ex: http://api.eva.demo/api
+  baseURL: 'https://get-your-trainer-default-rtdb.firebaseio.com',
   timeout: 5000,
 });
 
