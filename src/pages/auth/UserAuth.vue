@@ -1,11 +1,23 @@
 <template>
   <el-container direction="vertical">
-    <h1>Login</h1>
-    <auth-user
-      @handle-login="login"
-      @handle-signup="signup"
-      :isLoading="isLoading"
-    ></auth-user>
+    <el-tabs class="authentication" type="border-card" :stretch="true">
+      <el-tab-pane label="Login">
+        <h1>Login</h1>
+        <auth-user
+          @handle-login="login"
+          @handle-signup="signup"
+          :isLoading="isLoading"
+        />
+      </el-tab-pane>
+      <el-tab-pane label="Register" :lazy="true">
+        <h1>Sign up</h1>
+        <auth-user
+          @handle-login="login"
+          @handle-signup="signup"
+          :isLoading="isLoading"
+        />
+      </el-tab-pane>
+    </el-tabs>
   </el-container>
 </template>
 
@@ -19,27 +31,41 @@ export default {
   setup() {
     const store = useStore();
     const { $notify } = inject('plugins');
-    const error = ref(null);
     const isLoading = ref(false);
 
     // Call API
-    const login = (data) => {
-      store.dispatch('login', data);
+    // login
+    const login = async (data) => {
+      isLoading.value = true;
+      try {
+        await store.dispatch('login', data);
+        $notify.success({
+          title: 'Success',
+          message: 'Login successfully!',
+        });
+      } catch (err) {
+        $notify.error({
+          title: 'Error',
+          message: 'Authenticate failed! Please try again...',
+        });
+      } finally {
+        isLoading.value = false;
+      }
     };
 
+    // registration
     const signup = async (data) => {
       isLoading.value = true;
       try {
         await store.dispatch('signup', data);
         $notify.success({
           title: 'Success',
-          message: 'Your account has been created successfully!',
+          message: 'Your account has been created successfully',
         });
       } catch (err) {
-        error.value = err.message || 'Failed to authenticate';
         $notify.error({
           title: 'Error',
-          message: err.message || 'Authenticate failed! Please try again...',
+          message: err.message || 'Something went wrong! Please try again...',
         });
       } finally {
         isLoading.value = false;

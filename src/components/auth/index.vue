@@ -23,7 +23,7 @@
 
     <el-form-item label-width="0">
       <el-button type="primary" @click="handleLogin">Login</el-button>
-      <el-button @click="handleSignup">Sign up</el-button>
+      <el-button @click="handleSignup" plain>Sign up</el-button>
     </el-form-item>
   </el-form>
 </template>

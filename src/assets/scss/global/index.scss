@@ -1,0 +1,21 @@
+.el-notification {
+  background-color: #f2f6fc;
+}
+
+.custom-el-message-1 {
+  letter-spacing: 0.6px;
+}
+
+.el-tabs {
+  &.authentication {
+    .el-tabs {
+      &__header {
+        .el-tabs {
+          &__item {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -41,6 +41,10 @@ body {
   margin: 0;
 }
 
+.el-header {
+  padding: 0;
+}
+
 .el-main {
   text-align: center;
   margin-bottom: 40px;

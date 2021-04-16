@@ -34,6 +34,8 @@ import {
   ElCollapseItem,
   ElCollapse,
   ElImage,
+  ElTabs,
+  ElTabPane,
 } from 'element-plus';
 
 export default [
@@ -67,6 +69,8 @@ export default [
   ElCollapse,
   ElCollapseItem,
   ElImage,
+  ElTabs,
+  ElTabPane,
 ];
 
 export const plugins = [

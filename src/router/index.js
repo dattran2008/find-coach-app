@@ -32,7 +32,7 @@ const routes = [
   },
   { path: '/coaches', component: CoachList },
   {
-    path: '/coaches/:id([a-z]\\d+)',
+    path: '/coaches/:id([^\\W]+)', // ([a-z]\\d+) -> character with number
     component: CoachDetail,
     props: true,
     children: [{ path: 'contact', component: ContactCoach }],

@@ -21,7 +21,11 @@
     <el-menu-item index="2" :route="{ path: '/requests' }">
       Requests
     </el-menu-item>
-    <el-menu-item index="3" :route="{ path: '/auth' }">Login</el-menu-item>
+    <div class="menu-login">
+      <router-link to="/auth" tag="button">
+        <el-button type="info" plain round>Login</el-button>
+      </router-link>
+    </div>
   </el-menu>
 </template>
 
@@ -33,7 +37,8 @@ import Logo from '@/assets/images/coach.svg';
 export default {
   setup() {
     const route = useRoute();
-    const paths = ['/coaches', '/requests', '/auth'];
+    const paths = ['/coaches', '/requests'];
+    const url = Logo;
 
     const activeIndex = computed(() => {
       let selected = '';
@@ -50,10 +55,6 @@ export default {
       }
       return selected.toString();
     });
-    const url = Logo;
-    // watchEffect(() => {
-    //   activeIndex.value = route.path;
-    // });
 
     return { activeIndex, url };
   },
@@ -71,5 +72,10 @@ export default {
   span {
     margin: 0 15px 0 10px;
   }
+}
+
+.menu-login {
+  text-align: right;
+  margin: 10px 30px 0;
 }
 </style>

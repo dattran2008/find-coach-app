@@ -10,6 +10,8 @@ export default {
       hourlyRate: data.rate,
       description: data.description,
     };
+
+    // const { token } = context.rootGetters;
     const response = await fetch(
       `https://get-your-trainer-default-rtdb.firebaseio.com/coaches/${userId}.json`,
       {

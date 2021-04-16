@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { computed, ref, onBeforeUpdate } from 'vue';
+import { computed, ref, onBeforeUpdate, inject } from 'vue';
 import { useStore } from 'vuex';
 import RequestItem from '@/components/requests/item/index.vue';
 
@@ -36,6 +36,7 @@ export default {
   setup() {
     const store = useStore();
     const isLoading = ref(true);
+    const { $message } = inject('plugins');
 
     // Get data from api
     const fetchMessage = async () => {
@@ -44,7 +45,14 @@ export default {
       } catch (error) {
         setTimeout(() => {
           isLoading.value = false;
-        }, 4000);
+          $message.error({
+            message: 'Loading requests fail. Please try again later!',
+            offset: 180,
+            showClose: true,
+            duration: 1500,
+            customClass: 'custom-el-message-1',
+          });
+        }, 3500);
       }
     };
 

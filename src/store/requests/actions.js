@@ -1,4 +1,4 @@
-import axios from '@/utils/axios';
+import axios from 'axios';
 
 export default {
   async sendMessage(context, payload) {
@@ -24,14 +24,18 @@ export default {
 
   async fetchMessage(context) {
     const coachId = context.rootGetters.userId;
-    const response = await axios.get(`/requests/${coachId}.json`);
+    const { token } = context.rootGetters;
+    console.log('token: ', coachId);
+    const response = await fetch(
+      `https://get-your-trainer-default-rtdb.firebaseio.com/requests/${coachId}.json?auth=${token}`,
+    );
+    console.log('res: ', response);
     const responseData = await response.data;
 
-    if (response.statusText !== 'OK') {
-      const err = new Error(responseData.message || 'Failed to send!');
+    if (response.statusText !== 200) {
+      const err = new Error(responseData.message || 'Failed to fetch!');
       throw err;
     }
-
     const messages = [];
     if (responseData) {
       Object.keys(responseData).map((key) => {

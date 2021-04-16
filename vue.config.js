@@ -13,6 +13,7 @@ module.exports = {
       sass: {
         prependData: `
           @import "@/assets/scss/ui/loading.scss";
+          @import "@/assets/scss/global/index.scss";
         `,
       },
     },
