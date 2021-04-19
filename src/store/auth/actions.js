@@ -15,18 +15,34 @@ export default {
 
     const responseData = response.data;
     const status = response.status || {};
-    console.log('here', response);
     if (status !== 200) {
       const err = new Error(response.message || 'Failed to authenticate!');
       throw err;
     }
 
-    // console.log('here', response);
+    localStorage.setItem('token', responseData.idToken);
+    localStorage.setItem('userId', responseData.userId);
+
     context.commit('setUser', {
       token: responseData.idToken,
       userId: responseData.localId,
-      tokenExpire: responseData.expiresIn,
+      tokenExpiration: responseData.expiresIn,
+      email: responseData.email,
+      displayName: responseData.displayName,
     });
+  },
+
+  autoLogin(context) {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
+    if (token && userId) {
+      context.commit('setUser', {
+        token,
+        userId,
+        tokenExpiration: null,
+      });
+    }
   },
 
   async signup(context, payload) {
@@ -50,7 +66,20 @@ export default {
     context.commit('setUser', {
       token: responseData.idToken,
       userId: responseData.localId,
-      tokenExpire: responseData.expiresIn,
+      tokenExpiration: responseData.expiresIn,
     });
+  },
+
+  logout(context) {
+    localStorage.clear();
+
+    const data = {
+      userId: null,
+      token: null,
+      tokenExpiration: null,
+      email: null,
+      displayName: null,
+    };
+    context.commit('setUser', data);
   },
 };

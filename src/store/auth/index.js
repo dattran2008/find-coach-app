@@ -6,8 +6,10 @@ export default {
   state() {
     return {
       userId: null,
+      email: null,
+      displayName: null,
       token: null,
-      tokenExpire: null,
+      tokenExpiration: null,
     };
   },
   getters,

@@ -14,17 +14,41 @@
       </template>
       <el-image style="height: 100px" :src="url" fit="cover"></el-image>
     </el-menu-item>
-    <el-menu-item index="0" :route="{ path: '/' }"> Home Center</el-menu-item>
+    <el-menu-item index="0" :route="{ path: '/' }"> Home Center </el-menu-item>
     <el-menu-item index="1" :route="{ path: '/coaches' }">
       All Coaches
     </el-menu-item>
-    <el-menu-item index="2" :route="{ path: '/requests' }">
+    <el-menu-item v-if="isLoggedIn" index="2" :route="{ path: '/requests' }">
       Requests
     </el-menu-item>
     <div class="menu-login">
-      <router-link to="/auth" tag="button">
+      <router-link v-if="!isLoggedIn" to="/auth" tag="button">
         <el-button type="info" plain round>Login</el-button>
       </router-link>
+      <el-dropdown
+        v-else
+        trigger="click"
+        style="color: white; margin: 7px 0"
+        placement="bottom-end"
+      >
+        <div class="el-dropdown-link">
+          <div class="el-dropdown-link__text">
+            {{ userEmail || 'Anonymous Name' }}
+          </div>
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </div>
+        <template #dropdown>
+          <el-dropdown-menu class="header">
+            <el-dropdown-item icon="el-icon-user-solid">
+              Profile
+            </el-dropdown-item>
+            <el-dropdown-item icon="el-icon-s-cooperation">
+              Your coach
+            </el-dropdown-item>
+            <el-dropdown-item divided @click="logout">Logout</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
   </el-menu>
 </template>
@@ -32,31 +56,36 @@
 <script>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
 import Logo from '@/assets/images/coach.svg';
 
 export default {
   setup() {
     const route = useRoute();
+    const store = useStore();
     const paths = ['/coaches', '/requests'];
     const url = Logo;
 
     const activeIndex = computed(() => {
       let selected = '';
       if (route.path.length > 1) {
-        // eslint-disable-next-line no-plusplus
-        for (let i = 0; i < paths.length; i++) {
-          if (route.path.includes(paths[i])) {
-            selected = i + 1;
-            break;
-          }
-        }
+        const result = paths.findIndex((el) => route.path.includes(el));
+        selected = result + 1;
       } else {
         selected = 0;
       }
       return selected.toString();
     });
 
-    return { activeIndex, url };
+    const userEmail = computed(() => store.getters.email);
+    const isLoggedIn = computed(() => store.getters.isAuthenticated);
+
+    // Handle logout
+    const logout = () => {
+      store.dispatch('logout');
+    };
+
+    return { activeIndex, url, userEmail, isLoggedIn, logout };
   },
 };
 </script>
@@ -77,5 +106,32 @@ export default {
 .menu-login {
   text-align: right;
   margin: 10px 30px 0;
+}
+
+.el-dropdown-link {
+  display: flex;
+  padding: 8px 10px;
+
+  &__text {
+    vertical-align: middle;
+    max-width: 120px;
+    color: inherit;
+    font-size: 14px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(41, 75, 114, 0.5);
+    border-radius: 5px;
+  }
+
+  .el-dropdown__popper {
+    &.el-popper.is-light.is-pure {
+      letter-spacing: 1px;
+    }
+  }
 }
 </style>

@@ -36,6 +36,9 @@ import {
   ElImage,
   ElTabs,
   ElTabPane,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
 } from 'element-plus';
 
 export default [
@@ -71,6 +74,9 @@ export default [
   ElImage,
   ElTabs,
   ElTabPane,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
 ];
 
 export const plugins = [

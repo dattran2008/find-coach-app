@@ -1,6 +1,9 @@
 /* eslint-disable implicit-arrow-linebreak */
 import { createRouter, createWebHistory } from 'vue-router';
 
+// VueX store
+import store from '@/store';
+
 // authentication
 const UserAuth = () => import('@/pages/auth/UserAuth.vue');
 
@@ -37,15 +40,29 @@ const routes = [
     props: true,
     children: [{ path: 'contact', component: ContactCoach }],
   },
-  { path: '/register', component: CoachRegister },
-  { path: '/requests', component: RequestsReceived },
-  { path: '/auth', component: UserAuth },
+  { path: '/register', component: CoachRegister, meta: { requireAuth: true } },
+  {
+    path: '/requests',
+    component: RequestsReceived,
+    meta: { requireAuth: true },
+  },
+  { path: '/auth', component: UserAuth, meta: { requireUnauth: true } },
   { path: '/:notFound(.*)', component: ErrorPages },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, _, next) => {
+  if (to.meta.requireAuth && !store.getters.isAuthenticated) {
+    next('/auth');
+  } else if (to.meta.requireUnauth && store.getters.isAuthenticated) {
+    next('/coaches');
+  } else {
+    next();
+  }
 });
 
 export default router;

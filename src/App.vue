@@ -16,12 +16,16 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
 import LayoutHeader from '@/layouts/Header.vue';
 import LayoutFooter from '@/layouts/Footer.vue';
 
 export default {
   components: { LayoutHeader, LayoutFooter },
-  setup() {},
+  setup() {
+    const store = useStore();
+    store.dispatch('autoLogin');
+  },
 };
 </script>
 
@@ -43,6 +47,7 @@ body {
 
 .el-header {
   padding: 0;
+  height: auto !important;
 }
 
 .el-main {

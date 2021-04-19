@@ -7,8 +7,9 @@
           :indeterminate="type.isIndeterminate"
           v-model="type.checkAll"
           @change="handleCheckAllChange"
-          >Check all</el-checkbox
         >
+          Check all
+        </el-checkbox>
         <el-checkbox-group v-model="type.filters" @change="setFilter">
           <el-checkbox id="ok" label="frontend">Front End</el-checkbox>
           <el-checkbox label="backend">Back End</el-checkbox>

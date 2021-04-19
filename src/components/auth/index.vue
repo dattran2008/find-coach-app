@@ -22,8 +22,10 @@
     </el-form-item>
 
     <el-form-item label-width="0">
-      <el-button type="primary" @click="handleLogin">Login</el-button>
-      <el-button @click="handleSignup" plain>Sign up</el-button>
+      <el-button v-if="!isRegister" type="primary" @click="handleLogin">
+        Login
+      </el-button>
+      <el-button v-else plain @click="handleSignup">Sign up</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -33,7 +35,7 @@ import { reactive, toRef } from 'vue';
 
 export default {
   emits: ['handle-login', 'handle-signup'],
-  props: ['isLoading'],
+  props: ['isLoading', 'isRegister'],
   setup(_, context) {
     // Validate
     const checkEmail = (rule, value, callback) => {
