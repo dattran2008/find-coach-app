@@ -2,6 +2,7 @@
   <el-row type="flex" justify="center">
     <el-col :xs="10" :sm="12" :md="10">
       <div
+        id="loading"
         v-if="isLoading"
         v-loading="isLoading"
         element-loading-text="Loading...."

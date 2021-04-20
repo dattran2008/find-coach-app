@@ -5,6 +5,7 @@
       <el-button plain size="medium">New Request</el-button>
     </el-badge>
     <div
+      id="loading"
       v-if="isLoading"
       v-loading="isLoading"
       element-loading-text="Loading...."

@@ -13,18 +13,23 @@
         round
         @click="handleRefresh"
       ></el-button>
-      <router-link to="/register" tag="button">
-        <el-button
-          v-if="!isCoach && !isLoading"
-          icon="el-icon-plus"
-          type="primary"
-          size="medium"
-        >
+      <router-link v-if="!isLoggedIn" to="/auth?redirect=register" tag="button">
+        <el-button icon="el-icon-user-solid" round type="info" size="medium">
+          Login to register as Coach
+        </el-button>
+      </router-link>
+      <router-link
+        v-if="isLoggedIn && !isCoach && !isLoading"
+        to="/register"
+        tag="button"
+      >
+        <el-button icon="el-icon-plus" type="primary" size="medium">
           Register as Coach
         </el-button>
       </router-link>
     </div>
     <div
+      id="loading"
       v-if="isLoading"
       v-loading="isLoading"
       element-loading-text="Loading...."
@@ -64,6 +69,11 @@ export default {
     const isRefreshed = ref(false);
     const status = ref(null);
 
+    // Getters
+    const hasCoaches = computed(() => store.getters['coaches/hasCoaches']);
+    const isCoach = computed(() => store.getters['coaches/isCoach']);
+    const isLoggedIn = computed(() => store.getters.isAuthenticated);
+
     // Get data from api
     const fetchCoaches = async (refresh = false) => {
       isLoading.value = true;
@@ -71,20 +81,22 @@ export default {
         const result = await store.dispatch('coaches/fetchCoaches', {
           isRefresh: refresh,
         });
-        status.value = result.status;
+        status.value = refresh && result.status;
       } catch (error) {
+        let errorMessage = 'Something went wrong!';
+        if (error.message.includes('Network')) {
+          errorMessage = error.message;
+        }
         $notify.error({
           title: 'Error',
-          message: error.message || 'Something went wrong!',
+          message: errorMessage,
           customClass: 'text',
+          duration: 2500,
         });
+        return;
       }
       isLoading.value = false;
     };
-
-    // Getters
-    const hasCoaches = computed(() => store.getters['coaches/hasCoaches']);
-    const isCoach = computed(() => store.getters['coaches/isCoach']);
 
     // Handle actions
     const filteredCoaches = computed(() => {
@@ -122,14 +134,16 @@ export default {
 
     // handle click refresh
     const handleRefresh = async () => {
+      isRefreshed.value = true;
       await fetchCoaches(true);
       if (status.value === 200) {
         $notify.success({
           title: 'Success',
           message: 'Data is refreshed!',
+          duration: 2000,
         });
       }
-      isRefreshed.value = true;
+      status.value = null;
     };
 
     // Hooks
@@ -140,6 +154,7 @@ export default {
       isLoading,
       isRefreshed,
       hasCoaches,
+      isLoggedIn,
       filteredCoaches,
       setFilter,
       handleRefresh,

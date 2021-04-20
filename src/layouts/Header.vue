@@ -12,7 +12,7 @@
       <template #title>
         <span> Find my coach </span>
       </template>
-      <el-image style="height: 100px" :src="url" fit="cover"></el-image>
+      <el-image style="height: 100px" :src="logoUrl" fit="cover"></el-image>
     </el-menu-item>
     <el-menu-item index="0" :route="{ path: '/' }"> Home Center </el-menu-item>
     <el-menu-item index="1" :route="{ path: '/coaches' }">
@@ -23,7 +23,9 @@
     </el-menu-item>
     <div class="menu-login">
       <router-link v-if="!isLoggedIn" to="/auth" tag="button">
-        <el-button type="info" plain round>Login</el-button>
+        <el-button type="info" plain round style="margin-top: 10px">
+          Login
+        </el-button>
       </router-link>
       <el-dropdown
         v-else
@@ -32,6 +34,11 @@
         placement="bottom-end"
       >
         <div class="el-dropdown-link">
+          <el-avatar
+            size="small"
+            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            alt="Avatar"
+          ></el-avatar>
           <div class="el-dropdown-link__text">
             {{ userEmail || 'Anonymous Name' }}
           </div>
@@ -54,17 +61,19 @@
 </template>
 
 <script>
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { computed, inject } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import Logo from '@/assets/images/coach.svg';
 
 export default {
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const store = useStore();
     const paths = ['/coaches', '/requests'];
-    const url = Logo;
+    const logoUrl = Logo;
+    const { $loading } = inject('plugins');
 
     const activeIndex = computed(() => {
       let selected = '';
@@ -81,11 +90,19 @@ export default {
     const isLoggedIn = computed(() => store.getters.isAuthenticated);
 
     // Handle logout
-    const logout = () => {
-      store.dispatch('logout');
+    const logout = async () => {
+      const loading = $loading({
+        lock: true,
+        text: 'Processing...',
+      });
+      await store.dispatch('logout');
+      setTimeout(() => {
+        loading.close();
+        router.replace('/');
+      }, 500);
     };
 
-    return { activeIndex, url, userEmail, isLoggedIn, logout };
+    return { activeIndex, logoUrl, userEmail, isLoggedIn, logout };
   },
 };
 </script>
@@ -105,11 +122,17 @@ export default {
 
 .menu-login {
   text-align: right;
-  margin: 10px 30px 0;
+  margin: 0 30px;
+
+  &:focus {
+    outline: 0;
+    border: none;
+  }
 }
 
 .el-dropdown-link {
   display: flex;
+  align-items: center;
   padding: 8px 10px;
 
   &__text {
@@ -120,6 +143,7 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    margin-left: 10px;
   }
 
   &:hover {

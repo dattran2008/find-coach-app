@@ -9,7 +9,6 @@ export default {
       email: null,
       displayName: null,
       token: null,
-      tokenExpiration: null,
     };
   },
   getters,

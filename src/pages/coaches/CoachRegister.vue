@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <h1>Registration</h1>
+    <h1>Coach Registration</h1>
     <registration-form @save-data="saveData"></registration-form>
   </el-container>
 </template>

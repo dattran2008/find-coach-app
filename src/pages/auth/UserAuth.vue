@@ -20,7 +20,7 @@
 <script>
 import { ref, inject } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import AuthUser from '@/components/auth/index.vue';
 
 export default {
@@ -28,6 +28,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const route = useRoute();
     const { $notify } = inject('plugins');
     const isLoading = ref(false);
 
@@ -42,7 +43,8 @@ export default {
           message: 'Login successfully!',
           duration: 1500,
         });
-        router.replace('/coaches');
+        const redirectUrl = `/${route.query.redirect || 'coaches'}`;
+        router.replace(redirectUrl);
       } catch (err) {
         $notify.error({
           title: 'Error',
