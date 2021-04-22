@@ -1,26 +1,12 @@
-import axios from 'axios';
-import API_KEY from '@/api/constant';
+import * as Api from '@/api/auth';
 
 let timer;
 
 export default {
   async login(context, payload) {
-    const data = {
-      email: payload.email,
-      password: payload.password,
-      returnSecureToken: true,
-    };
-    const response = await axios.post(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
-      data,
-    );
+    const response = await Api.login(payload);
 
     const responseData = response.data;
-    const status = response.status || {};
-    if (status !== 200) {
-      const err = new Error(response.message || 'Failed to authenticate!');
-      throw err;
-    }
     const expiresIn = +responseData.expiresIn * 1000;
     const expirationDate = new Date().getTime() + expiresIn;
 
@@ -29,8 +15,9 @@ export default {
     }, expiresIn);
 
     localStorage.setItem('token', responseData.idToken);
-    localStorage.setItem('userId', responseData.userId);
+    localStorage.setItem('userId', responseData.localId);
     localStorage.setItem('tokenExpiration', expirationDate);
+    localStorage.setItem('email', responseData.email);
 
     context.commit('setUser', {
       token: responseData.idToken,
@@ -44,8 +31,9 @@ export default {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     const tokenExpiration = localStorage.getItem('tokenExpiration');
-
+    const email = localStorage.getItem('email');
     const expiresIn = +tokenExpiration - new Date().getTime();
+
     if (expiresIn < 0) {
       return;
     }
@@ -58,27 +46,14 @@ export default {
       context.commit('setUser', {
         token,
         userId,
+        email,
       });
     }
   },
 
   async signup(context, payload) {
-    const data = {
-      email: payload.email,
-      password: payload.password,
-      secureToken: true,
-    };
-    const response = await axios.post(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
-      data,
-    );
-
-    const responseData = await response.data;
-    const status = response.status || {};
-    if (status !== 200) {
-      const err = new Error(responseData.message || 'Failed to signup!');
-      throw err;
-    }
+    const response = await Api.signup(payload);
+    const responseData = response.data;
 
     context.commit('setUser', {
       token: responseData.idToken,
@@ -88,7 +63,6 @@ export default {
 
   logout(context) {
     localStorage.clear();
-
     clearTimeout(timer);
 
     const data = {

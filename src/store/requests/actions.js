@@ -1,4 +1,4 @@
-import axios from 'axios';
+import * as Api from '@/api/requests';
 
 export default {
   async sendMessage(context, payload) {
@@ -6,11 +6,9 @@ export default {
       email: payload.email,
       message: payload.message,
     };
-    const response = await axios.post(
-      `/requests/${payload.coachId}.json`,
-      messData,
-    );
-    const responseData = await response.data;
+    const response = await Api.send(payload, { coachId: payload.coachId });
+    const responseData = response.data;
+    console.log('payload: ', response);
 
     if (response.statusText !== 'OK') {
       const err = new Error(responseData.message || 'Failed to send!');

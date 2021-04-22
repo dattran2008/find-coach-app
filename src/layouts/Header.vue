@@ -75,6 +75,8 @@ export default {
     const logoUrl = Logo;
     const { $loading } = inject('plugins');
 
+    const userEmail = computed(() => store.getters.email);
+    const isLoggedIn = computed(() => store.getters.isAuthenticated);
     const activeIndex = computed(() => {
       let selected = '';
       if (route.path.length > 1) {
@@ -85,9 +87,6 @@ export default {
       }
       return selected.toString();
     });
-
-    const userEmail = computed(() => store.getters.email);
-    const isLoggedIn = computed(() => store.getters.isAuthenticated);
 
     // Handle logout
     const logout = async () => {

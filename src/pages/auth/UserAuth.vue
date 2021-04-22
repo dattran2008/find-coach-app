@@ -45,10 +45,18 @@ export default {
         });
         const redirectUrl = `/${route.query.redirect || 'coaches'}`;
         router.replace(redirectUrl);
-      } catch (err) {
+      } catch (error) {
+        let errorMessage = error.message;
+        const { response } = error || {};
+        if (response && response.status === 400) {
+          errorMessage = response.data.error.message
+            .replace(/_/g, ' ')
+            .toLowerCase()
+            .replace(/\b\w/g, (letter) => letter.toUpperCase());
+        }
         $notify.error({
           title: 'Error',
-          message: 'Authenticate failed! Please try again...',
+          message: errorMessage,
           duration: 2000,
         });
       } finally {
@@ -65,10 +73,18 @@ export default {
           title: 'Success',
           message: 'Your account has been created successfully',
         });
-      } catch (err) {
+      } catch (error) {
+        let errorMessage = error.message;
+        const { response } = error || {};
+        if (response && response.status === 400) {
+          errorMessage = response.data.error.message
+            .replace(/_/g, ' ')
+            .toLowerCase()
+            .replace(/^\w/g, (letter) => letter.toUpperCase());
+        }
         $notify.error({
           title: 'Error',
-          message: err.message || 'Something went wrong! Please try again...',
+          message: errorMessage,
         });
       } finally {
         isLoading.value = false;

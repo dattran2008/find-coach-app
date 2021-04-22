@@ -1,4 +1,4 @@
-import axios from '@/utils/axios';
+import * as Api from '@/api/coaches';
 
 export default {
   async registerCoach(context, data) {
@@ -11,25 +11,13 @@ export default {
       description: data.description,
     };
 
-    // const { token } = context.rootGetters;
-    const response = await fetch(
-      `https://get-your-trainer-default-rtdb.firebaseio.com/coaches/${userId}.json`,
-      {
-        method: 'PUT',
-        body: JSON.stringify(coachData),
-      },
-    );
-
-    // const response = await axios.post(`/${userId}.json`, coachData);
-
-    if (!response.ok) {
-      // TODO
-    }
+    const response = await Api.register(data, { userId });
 
     context.commit('registerCoach', {
       ...coachData,
       id: userId,
     });
+    return response;
   },
 
   async fetchCoaches(context, payload) {
@@ -39,13 +27,8 @@ export default {
       return false;
     }
 
-    const response = await axios.get('/coaches.json');
-    const responseData = await response.data;
-    if (response.statusText !== 'OK') {
-      const err = new Error(responseData.message || 'Failed to fetch!');
-      throw err;
-    }
-
+    const response = await Api.fetchCoaches();
+    const responseData = response.data;
     const coaches = [];
     if (responseData) {
       Object.keys(responseData).map((key) => {

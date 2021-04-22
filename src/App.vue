@@ -4,7 +4,7 @@
   </el-header>
   <el-main>
     <router-view v-slot="slot">
-      <transition name="el-fade-in-linear">
+      <transition name="el-fade-in-linear" mode="in-out">
         <component :is="slot.Component"></component>
       </transition>
     </router-view>
@@ -25,6 +25,7 @@ export default {
   setup() {
     const store = useStore();
     store.dispatch('autoLogin');
+    console.log(store.getters);
   },
 };
 </script>

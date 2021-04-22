@@ -83,9 +83,12 @@ export default {
         });
         status.value = refresh && result.status;
       } catch (error) {
-        let errorMessage = 'Something went wrong!';
-        if (error.message.includes('Network')) {
-          errorMessage = error.message;
+        let errorMessage = error.message;
+        const { response } = error || {};
+        if (response && response.status === 404) {
+          errorMessage = response.data
+            .toLowerCase()
+            .replace(/^\w/g, (letter) => letter.toUpperCase());
         }
         $notify.error({
           title: 'Error',

@@ -9,7 +9,7 @@ const UserAuth = () => import('@/pages/auth/UserAuth.vue');
 
 // homepage & error
 const Home = () => import(/* webpackChunkName: "home" */ '@/pages/index.vue');
-const ErrorPages = () => import('@/layouts/error.vue');
+const ErrorPage = () => import('@/layouts/error.vue');
 
 // coaches
 const CoachDetail = () =>
@@ -47,7 +47,7 @@ const routes = [
     meta: { requireAuth: true },
   },
   { path: '/auth', component: UserAuth, meta: { requireUnauth: true } },
-  { path: '/:notFound(.*)', component: ErrorPages },
+  { path: '/:notFound(.*)', component: ErrorPage },
 ];
 
 const router = createRouter({
