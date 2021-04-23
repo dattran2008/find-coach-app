@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { inject } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import RegistrationForm from '@/components/coaches/register/index.vue';
@@ -15,10 +16,27 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const { $notify } = inject('plugins');
 
-    const saveData = (data) => {
-      store.dispatch('coaches/registerCoach', data);
-      router.replace('/coaches');
+    const saveData = async (data) => {
+      try {
+        await store.dispatch('coaches/registerCoach', data);
+        router.replace('/coaches');
+      } catch (error) {
+        let errorMessage = error.message;
+        const { response } = error || {};
+        if (response && response.status !== 200) {
+          errorMessage = response.statusText
+            .replace(/_/g, ' ')
+            .toLowerCase()
+            .replace(/\b\w/g, (letter) => letter.toUpperCase());
+        }
+        $notify.error({
+          title: 'Error',
+          message: errorMessage,
+          duration: 2000,
+        });
+      }
     };
 
     return { saveData };

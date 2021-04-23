@@ -18,16 +18,29 @@
         show-word-limit
       ></el-input>
     </el-form-item>
-    <el-button round type="info" @click="submitForm"> Send Message </el-button>
+    <el-button round type="info" @click="submitForm" :disabled="!!isSuccess">
+      Send Message
+    </el-button>
+    <el-alert
+      v-if="isSuccess"
+      title="Success"
+      type="success"
+      description="Thank you for contacting us! Your message has been sent to our coach."
+      show-icon
+      class="request-alert"
+    >
+    </el-alert>
   </el-form>
 </template>
 
 <script>
-import { reactive, toRef } from 'vue';
+import { reactive, toRef, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 export default {
-  setup(_, context) {
+  props: ['success'],
+  emits: ['send-message'],
+  setup(props, context) {
     const route = useRoute();
     const data = reactive({
       form: {
@@ -67,7 +80,9 @@ export default {
       },
     });
     const getRef = toRef(data, 'getRef');
+    const isSuccess = computed(() => props.success);
 
+    // Handle actions
     const submitForm = () => {
       // eslint-disable-next-line consistent-return
       getRef.value.validate((valid) => {
@@ -84,7 +99,21 @@ export default {
       });
     };
 
-    return { data, getRef, submitForm };
+    // Hooks
+    watch(isSuccess, (newVal) => {
+      if (newVal) {
+        getRef.value.resetFields();
+      }
+    });
+
+    return { data, getRef, submitForm, isSuccess };
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.request-alert {
+  margin-top: 25px;
+  text-align: left;
+}
+</style>

@@ -44,17 +44,23 @@ export default {
       try {
         await store.dispatch('requests/fetchMessage');
       } catch (error) {
-        setTimeout(() => {
-          isLoading.value = false;
-          $message.error({
-            message: 'Loading requests fail. Please try again later!',
-            offset: 180,
-            showClose: true,
-            duration: 1500,
-            customClass: 'custom-el-message-1',
-          });
-        }, 3500);
+        let errorMessage = error.message;
+        const { response } = error || {};
+        if (response && response.status !== 200) {
+          errorMessage = response.statusText
+            .toLowerCase()
+            .replace(/^\w/g, (letter) => letter.toUpperCase());
+        }
+        $message.error({
+          message: errorMessage,
+          offset: 180,
+          showClose: true,
+          duration: 1500,
+          customClass: 'custom-el-message-1',
+        });
+        return;
       }
+      isLoading.value = false;
     };
 
     const data = computed(() => store.getters['requests/requests']);

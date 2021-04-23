@@ -1,28 +1,26 @@
 <template>
   <el-main>
     <h1>Contact a coach</h1>
-    <contact-form @send-message="sendMessage" />
+    <contact-form @send-message="sendMessage" :success="success" />
   </el-main>
 </template>
 
 <script>
-import { inject } from 'vue';
+import { ref, inject } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
 import ContactForm from '@/components/requests/contact/index.vue';
 
 export default {
   components: { ContactForm },
   setup() {
     const store = useStore();
-    const router = useRouter();
     const { $notify } = inject('plugins');
+    const success = ref(false);
 
     const sendMessage = async (data) => {
       try {
-        const result = await store.dispatch('requests/sendMessage', data);
-        console.log('Result: ', result);
-        router.replace('/coaches');
+        await store.dispatch('requests/sendMessage', data);
+        success.value = true;
       } catch (error) {
         $notify.error({
           title: 'Error',
@@ -32,7 +30,7 @@ export default {
       }
     };
 
-    return { sendMessage };
+    return { sendMessage, success };
   },
 };
 </script>

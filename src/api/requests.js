@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 import axios from 'axios';
 
 export const send = (params, payload) => {
@@ -11,6 +12,7 @@ export const send = (params, payload) => {
   );
 };
 
-export const fetchMessage = () => {
-  // TODO
-};
+export const fetchMessage = (payload) =>
+  axios.get(
+    `https://get-your-trainer-default-rtdb.firebaseio.com/requests/${payload.coachId}.json?auth=${payload.token}`,
+  );

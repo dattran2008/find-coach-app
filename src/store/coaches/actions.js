@@ -3,6 +3,7 @@ import * as Api from '@/api/coaches';
 export default {
   async registerCoach(context, data) {
     const { userId } = context.rootGetters;
+    const { token } = context.rootGetters;
     const coachData = {
       firstName: data.firstName,
       lastName: data.lastName,
@@ -11,7 +12,7 @@ export default {
       description: data.description,
     };
 
-    const response = await Api.register(data, { userId });
+    const response = await Api.register(data, { userId, token });
 
     context.commit('registerCoach', {
       ...coachData,

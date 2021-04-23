@@ -1,17 +1,21 @@
 <template>
   <el-container direction="vertical">
     <el-tabs class="authentication" type="border-card" :stretch="true">
-      <el-tab-pane label="Login">
-        <h1>Login</h1>
-        <auth-user @handle-login="login" :isLoading="isLoading" />
-      </el-tab-pane>
-      <el-tab-pane label="Register" :lazy="true">
-        <h1>Sign up</h1>
-        <auth-user
-          @handle-signup="signup"
-          :isLoading="isLoading"
-          :isRegister="true"
-        />
+      <el-tab-pane
+        :lazy="true"
+        v-for="(tab, tabIndex) in Tabs"
+        :key="tabIndex"
+        :label="tab.label"
+      >
+        <h1>{{ tab.label }}</h1>
+        <transition name="el-fade-in-linear" appear>
+          <component
+            :is="tab.content"
+            @handle="tab.method"
+            :isLoading="isLoading"
+            :isRegister="tab.isRegister"
+          />
+        </transition>
       </el-tab-pane>
     </el-tabs>
   </el-container>
@@ -21,10 +25,9 @@
 import { ref, inject } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
-import AuthUser from '@/components/auth/index.vue';
+import AuthTabs from '@/utils/constant';
 
 export default {
-  components: { AuthUser },
   setup() {
     const store = useStore();
     const router = useRouter();
@@ -91,7 +94,9 @@ export default {
       }
     };
 
-    return { login, signup, isLoading };
+    const Tabs = AuthTabs({ login, signup });
+
+    return { login, signup, isLoading, Tabs };
   },
 };
 </script>

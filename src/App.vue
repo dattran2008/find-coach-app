@@ -4,7 +4,7 @@
   </el-header>
   <el-main>
     <router-view v-slot="slot">
-      <transition name="el-fade-in-linear" mode="in-out">
+      <transition name="el-fade-in-linear" mode="out-in">
         <component :is="slot.Component"></component>
       </transition>
     </router-view>

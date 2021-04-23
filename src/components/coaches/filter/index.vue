@@ -11,7 +11,7 @@
           Check all
         </el-checkbox>
         <el-checkbox-group v-model="type.filters" @change="setFilter">
-          <el-checkbox id="ok" label="frontend">Front End</el-checkbox>
+          <el-checkbox label="frontend">Front End</el-checkbox>
           <el-checkbox label="backend">Back End</el-checkbox>
           <el-checkbox label="career">Career</el-checkbox>
         </el-checkbox-group>
@@ -24,6 +24,7 @@
 import { reactive } from 'vue';
 
 export default {
+  emits: ['coach-filter'],
   setup(_, context) {
     const areas = ['frontend', 'backend', 'career'];
     const type = reactive({

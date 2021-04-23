@@ -8,7 +8,6 @@ export default {
     };
     const response = await Api.send(payload, { coachId: payload.coachId });
     const responseData = response.data;
-    console.log('payload: ', response);
 
     if (response.statusText !== 'OK') {
       const err = new Error(responseData.message || 'Failed to send!');
@@ -16,26 +15,24 @@ export default {
     }
     messData.id = responseData.name;
     messData.coachId = payload.coachId;
-
     context.commit('sendMessage', messData);
+
+    return response;
   },
 
   async fetchMessage(context) {
     const coachId = context.rootGetters.userId;
     const { token } = context.rootGetters;
-    console.log('token: ', coachId);
-    const response = await fetch(
-      `https://get-your-trainer-default-rtdb.firebaseio.com/requests/${coachId}.json?auth=${token}`,
-    );
-    console.log('res: ', response);
-    const responseData = await response.data;
 
-    if (response.statusText !== 200) {
+    const response = await Api.fetchMessage({ coachId, token });
+    const responseData = response.data;
+    if (response.statusText !== 'OK') {
       const err = new Error(responseData.message || 'Failed to fetch!');
       throw err;
     }
+
     const messages = [];
-    if (responseData) {
+    if (response.status === 200 && responseData) {
       Object.keys(responseData).map((key) => {
         const request = {
           id: key,

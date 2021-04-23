@@ -11,7 +11,7 @@ export const register = (params, payload) => {
   };
 
   return axios.put(
-    `https://get-your-trainer-default-rtdb.firebaseio.com/coaches/${payload.userId}.json`,
+    `https://get-your-trainer-default-rtdb.firebaseio.com/coaches/${payload.userId}.json?auth=${payload.token}`,
     data,
   );
 };

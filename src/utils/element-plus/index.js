@@ -39,6 +39,7 @@ import {
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,
+  ElAlert,
 } from 'element-plus';
 
 export default [
@@ -77,6 +78,7 @@ export default [
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,
+  ElAlert,
 ];
 
 export const plugins = [

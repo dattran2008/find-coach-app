@@ -1,14 +1,5 @@
 import axios from 'axios';
 
-// let localData;
-// let token;
-// if (localStorage.getItem('data') === null) {
-//   token = 'null';
-// } else {
-//   localData = JSON.parse(localStorage.getItem('data'));
-//   token = localData.token;
-// }
-
 const instance = axios.create({
   baseURL: 'https://get-your-trainer-default-rtdb.firebaseio.com',
   timeout: 5000,
