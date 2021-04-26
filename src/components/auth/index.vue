@@ -1,35 +1,33 @@
 <template>
-  <section>
+  <el-form
+    :model="data.ruleForm"
+    :rules="data.rules"
+    ref="getRef"
+    label-width="110px"
+    status-icon
+  >
     <span
       v-loading.fullscreen.lock="isLoading"
       element-loading-text="Processing....."
     ></span>
-    <el-form
-      :model="data.ruleForm"
-      :rules="data.rules"
-      ref="getRef"
-      label-width="110px"
-      status-icon
-    >
-      <el-form-item label="Email" prop="email">
-        <el-input
-          v-model="data.ruleForm.email"
-          clearable
-          autocomplete="on"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="Password" prop="password">
-        <el-input v-model="data.ruleForm.password" show-password></el-input>
-      </el-form-item>
+    <el-form-item label="Email" prop="email">
+      <el-input
+        v-model="data.ruleForm.email"
+        clearable
+        autocomplete="on"
+      ></el-input>
+    </el-form-item>
+    <el-form-item label="Password" prop="password">
+      <el-input v-model="data.ruleForm.password" show-password></el-input>
+    </el-form-item>
 
-      <el-form-item label-width="0">
-        <el-button v-if="!isRegister" type="primary" @click="handleLogin">
-          Login
-        </el-button>
-        <el-button v-else plain @click="handleSignup">Sign up</el-button>
-      </el-form-item>
-    </el-form>
-  </section>
+    <el-form-item label-width="0">
+      <el-button v-if="!isRegister" type="primary" @click="handleLogin">
+        Login
+      </el-button>
+      <el-button v-else plain @click="handleSignup">Sign up</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>

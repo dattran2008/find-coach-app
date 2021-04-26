@@ -12,9 +12,15 @@
       <i class="el-icon-star-on"></i>
     </el-divider>
     <div class="contact" v-if="selectedCoach">
+      <router-link
+        v-if="isShow"
+        :to="`${route.path}/contact#send`"
+        tag="button"
+      >
+        <el-button plain v-if="isShow">Start Here</el-button>
+      </router-link>
       <h1 class="title">Contact Us</h1>
       <h3>Interested? Reach out now</h3>
-      <el-button plain @click="contactLink">Start Here</el-button>
     </div>
     <router-view></router-view>
   </section>
@@ -45,19 +51,23 @@ export default {
       );
       return result;
     });
+    const isShow = computed(() => store.getters['ui/show']);
 
+    // Handle
+
+    const handleGoBack = () => router.push('/coaches');
+
+    // Hooks
     onUpdated(() => {
       isLoading.value = false;
     });
 
-    const contactLink = () => router.replace(`${route.path}/contact`);
-    const handleGoBack = () => router.push('/coaches');
-
     return {
-      contactLink,
       handleGoBack,
       isLoading,
       selectedCoach,
+      isShow,
+      route,
     };
   },
 };

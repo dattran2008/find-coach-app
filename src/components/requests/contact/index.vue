@@ -18,7 +18,13 @@
         show-word-limit
       ></el-input>
     </el-form-item>
-    <el-button round type="info" @click="submitForm" :disabled="!!isSuccess">
+    <el-button
+      id="send"
+      round
+      type="info"
+      @click="submitForm"
+      :disabled="!!isSuccess"
+    >
       Send Message
     </el-button>
     <el-alert

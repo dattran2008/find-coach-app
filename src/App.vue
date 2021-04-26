@@ -4,11 +4,11 @@
   </el-header>
   <el-main>
     <router-view v-slot="slot">
-      <transition name="el-fade-in-linear" mode="out-in">
+      <transition name="el-fade-in-linear" mode="out-in" appear>
         <component :is="slot.Component"></component>
       </transition>
     </router-view>
-    <el-backtop target="#app"></el-backtop>
+    <el-backtop></el-backtop>
   </el-main>
   <el-footer>
     <layout-footer></layout-footer>
@@ -17,33 +17,45 @@
 
 <script>
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 import LayoutHeader from '@/layouts/Header.vue';
 import LayoutFooter from '@/layouts/Footer.vue';
+import { watch } from 'vue';
 
 export default {
   components: { LayoutHeader, LayoutFooter },
   setup() {
     const store = useStore();
+    const route = useRoute();
     store.dispatch('autoLogin');
-    console.log(store.getters);
+
+    watch(
+      () => route.params,
+      () => {
+        if (route.path === `/coaches/${route.params.id}/contact`) {
+          store.commit('ui/show', false);
+        } else {
+          store.commit('ui/show', true);
+        }
+      },
+    );
   },
 };
 </script>
 
 <style lang="scss">
+body {
+  margin: 0;
+  position: relative;
+  /* The height minus 60 pixels here is the height of the top navigation bar. Avoid the scroll bar that comes with the browser */
+  min-height: calc(100vh - 60px);
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  /* The height minus 60 pixels here is the height of the top navigation bar. Avoid the scroll bar that comes with the browser */
-  height: calc(100vh - 60px);
-  /* Automatic display scroll bar for overflow height */
-  overflow: auto;
-}
-
-body {
-  margin: 0;
 }
 
 .el-header {
@@ -53,7 +65,6 @@ body {
 
 .el-main {
   text-align: center;
-  margin-bottom: 40px;
 
   .el-backtop {
     background-color: #5488c7;
@@ -63,13 +74,11 @@ body {
 }
 
 .el-footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   width: 100%;
   height: 50px;
-  background-color: #b3c0d1;
-  color: #333;
-  line-height: 60px;
+  padding: 100px 0 0 0;
 }
 
 a {

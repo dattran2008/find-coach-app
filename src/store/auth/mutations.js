@@ -5,4 +5,7 @@ export default {
     state.email = payload.email;
     state.displayName = payload.displayName;
   },
+  show(state, payload) {
+    state.show = payload;
+  },
 };
