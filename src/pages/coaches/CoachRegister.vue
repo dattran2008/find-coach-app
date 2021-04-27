@@ -9,7 +9,7 @@
 import { inject } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import RegistrationForm from '@/components/coaches/register/index.vue';
+import RegistrationForm from '@/components/molecules/coaches/register/index.vue';
 
 export default {
   components: { RegistrationForm },

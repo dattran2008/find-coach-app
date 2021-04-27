@@ -30,7 +30,7 @@
 import { ref, onUpdated, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
-import Detail from '@/components/coaches/list/detail/index.vue';
+import Detail from '@/components/molecules/coaches/list/detail/index.vue';
 
 export default {
   props: ['id'],
@@ -54,8 +54,7 @@ export default {
     const isShow = computed(() => store.getters['ui/show']);
 
     // Handle
-
-    const handleGoBack = () => router.push('/coaches');
+    const handleGoBack = () => router.replace('/coaches');
 
     // Hooks
     onUpdated(() => {

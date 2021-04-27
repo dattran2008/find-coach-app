@@ -8,7 +8,7 @@
 <script>
 import { ref, inject } from 'vue';
 import { useStore } from 'vuex';
-import ContactForm from '@/components/requests/contact/index.vue';
+import ContactForm from '@/components/molecules/requests/contact/index.vue';
 
 export default {
   components: { ContactForm },

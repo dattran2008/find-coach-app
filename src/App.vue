@@ -18,8 +18,8 @@
 <script>
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-import LayoutHeader from '@/layouts/Header.vue';
-import LayoutFooter from '@/layouts/Footer.vue';
+import LayoutHeader from '@/layouts/header.vue';
+import LayoutFooter from '@/layouts/footer.vue';
 import { watch } from 'vue';
 
 export default {

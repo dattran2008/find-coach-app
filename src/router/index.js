@@ -58,7 +58,6 @@ const router = createRouter({
       return savedPosition;
     }
     if (to.hash) {
-      console.log('HASH', to, from);
       return { el: to.hash, behavior: 'smooth' };
     }
     return { x: 0, y: 0 };

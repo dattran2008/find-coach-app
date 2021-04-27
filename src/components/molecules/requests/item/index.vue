@@ -19,6 +19,7 @@ export default {
     const emailItem = computed(() => props.email);
     const messageItem = computed(() => props.message);
     const emailLink = computed(() => `mailto:${props.email}`);
+
     return { emailItem, messageItem, emailLink };
   },
 };

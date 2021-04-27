@@ -1,15 +1,13 @@
-import AuthUser from '@/components/auth/index.vue';
-
-export default (action) => [
+export default (action, component) => [
   {
     label: 'Login',
-    content: AuthUser,
+    content: component,
     method: action.login,
     isRegister: false,
   },
   {
     label: 'Register',
-    content: AuthUser,
+    content: component,
     method: action.signup,
     isRegister: true,
   },

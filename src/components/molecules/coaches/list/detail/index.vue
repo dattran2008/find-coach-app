@@ -1,12 +1,12 @@
 <template>
   <el-row type="flex" justify="center">
     <el-col :xs="10" :sm="12" :md="10">
-      <div
-        id="loading"
+      <loading-spinner
         v-if="isLoading"
-        v-loading="isLoading"
-        element-loading-text="Loading...."
-      ></div>
+        :loading="isLoading"
+        :loadingText="'Loading.....'"
+        :idLoading="'loading'"
+      />
       <el-card v-else-if="selectedCoach" :body-style="{ padding: '13px' }">
         <el-avatar
           shape="circle"
@@ -57,8 +57,10 @@
 
 <script>
 import { computed } from 'vue';
+import LoadingSpinner from '@/components/atoms/Loading.vue';
 
 export default {
+  components: { LoadingSpinner },
   props: ['selectedCoach', 'isLoading'],
   setup(props) {
     const types = ['success', 'warning', 'danger', 'primary', ''];

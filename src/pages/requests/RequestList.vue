@@ -4,12 +4,12 @@
     <el-badge :value="data.length" :max="10" class="item">
       <el-button plain size="medium">New Request</el-button>
     </el-badge>
-    <div
-      id="loading"
+    <loading-spinner
       v-if="isLoading"
-      v-loading="isLoading"
-      element-loading-text="Loading...."
-    ></div>
+      :loading="isLoading"
+      :loadingText="'Loading.....'"
+      :idLoading="'loading'"
+    />
     <div class="collapse" v-else-if="data.length > 0">
       <request-item
         v-for="item in data"
@@ -30,10 +30,11 @@
 <script>
 import { computed, ref, onBeforeUpdate, inject } from 'vue';
 import { useStore } from 'vuex';
-import RequestItem from '@/components/requests/item/index.vue';
+import RequestItem from '@/components/molecules/requests/item/index.vue';
+import LoadingSpinner from '@/components/atoms/Loading.vue';
 
 export default {
-  components: { RequestItem },
+  components: { RequestItem, LoadingSpinner },
   setup() {
     const store = useStore();
     const isLoading = ref(true);

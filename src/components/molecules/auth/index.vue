@@ -6,10 +6,7 @@
     label-width="110px"
     status-icon
   >
-    <span
-      v-loading.fullscreen.lock="isLoading"
-      element-loading-text="Processing....."
-    ></span>
+    <loading-screen :loading="isLoading" :loadingText="'Processing.....'" />
     <el-form-item label="Email" prop="email">
       <el-input
         v-model="data.ruleForm.email"
@@ -32,10 +29,12 @@
 
 <script>
 import { reactive, toRef } from 'vue';
+import LoadingScreen from '@/components/atoms/LoadingFullScreen.vue';
 
 export default {
   emits: ['handle'],
   props: ['isLoading', 'isRegister'],
+  components: { LoadingScreen },
   setup(props, context) {
     // Validate
     const checkEmail = (rule, value, callback) => {

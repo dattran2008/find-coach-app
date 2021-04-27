@@ -1,10 +1,11 @@
+/* eslint-disable no-useless-concat */
 <template>
   <el-card class="box-card">
     <template #header>
       <div class="card-header">
         <h3>{{ fullName }}</h3>
         <el-space size="medium">
-          <router-link :to="coachContactLink()" tag="button">
+          <router-link :to="`${route.path}/${id}/contact#send`" tag="button">
             <el-button type="primary" plain size="large" icon="el-icon-message">
             </el-button>
           </router-link>
@@ -38,11 +39,10 @@ export default {
   props: ['id', 'firstName', 'lastName', 'rate', 'areas'],
   setup(props) {
     const route = useRoute();
-
     const checked = ref(false);
     const fullName = computed(() => `${props.firstName} ${props.lastName}`);
 
-    const coachContactLink = () => `${route.path}/${props.id}/contact`;
+    const coachContactLink = () => `${route.path}/${props.id}/contact#send`;
     const coachDetailLink = () => `${route.path}/${props.id}`;
 
     return {
@@ -50,6 +50,7 @@ export default {
       coachContactLink,
       coachDetailLink,
       checked,
+      route,
     };
   },
 };

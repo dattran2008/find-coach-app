@@ -28,12 +28,12 @@
         </el-button>
       </router-link>
     </div>
-    <div
-      id="loading"
+    <loading-spinner
       v-if="isLoading"
-      v-loading="isLoading"
-      element-loading-text="Loading...."
-    ></div>
+      :loading="isLoading"
+      :loadingText="'Loading....'"
+      :idLoading="'loading'"
+    />
     <div class="list" v-else-if="hasCoaches">
       <coach-item
         v-for="coach in filteredCoaches"
@@ -52,13 +52,15 @@
 <script>
 import { computed, ref, inject } from 'vue';
 import { useStore } from 'vuex';
-import CoachItem from '@/components/coaches/list/item/index.vue';
-import CoachFilter from '@/components/coaches/filter/index.vue';
+import CoachItem from '@/components/molecules/coaches/list/item/index.vue';
+import CoachFilter from '@/components/molecules/coaches/filter/index.vue';
+import LoadingSpinner from '@/components/atoms/Loading.vue';
 
 export default {
   components: {
     CoachItem,
     CoachFilter,
+    LoadingSpinner,
   },
   setup() {
     const store = useStore();

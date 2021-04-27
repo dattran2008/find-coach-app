@@ -25,9 +25,11 @@
 import { ref, inject } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
+import AuthUser from '@/components/molecules/auth/index.vue';
 import AuthTabs from '@/utils/constant';
 
 export default {
+  components: { AuthUser },
   setup() {
     const store = useStore();
     const router = useRouter();
@@ -94,7 +96,7 @@ export default {
       }
     };
 
-    const Tabs = AuthTabs({ login, signup });
+    const Tabs = AuthTabs({ login, signup }, AuthUser);
 
     return { login, signup, isLoading, Tabs };
   },
