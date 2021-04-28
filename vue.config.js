@@ -14,6 +14,7 @@ module.exports = {
         prependData: `
           @import "@/assets/scss/ui/loading.scss";
           @import "@/assets/scss/global/index.scss";
+          @import "@/assets/scss/global/_variables.scss";
         `,
       },
     },

@@ -10,9 +10,7 @@
     </router-view>
     <el-backtop></el-backtop>
   </el-main>
-  <el-footer>
-    <layout-footer></layout-footer>
-  </el-footer>
+  <layout-footer></layout-footer>
 </template>
 
 <script>
@@ -65,20 +63,13 @@ body {
 
 .el-main {
   text-align: center;
+  padding-bottom: 200px;
 
   .el-backtop {
     background-color: #5488c7;
     color: #fff;
     border-radius: 0.188rem;
   }
-}
-
-.el-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 50px;
-  padding: 100px 0 0 0;
 }
 
 a {

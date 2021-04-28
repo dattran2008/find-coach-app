@@ -1,13 +1,25 @@
 <template>
-  <section class="footer">
-    <div>Footer</div>
-  </section>
+  <el-footer>
+    <main-footer />
+  </el-footer>
 </template>
 
+<script>
+import MainFooter from '@/components/molecules/footer/index.vue';
+
+export default {
+  components: { MainFooter },
+};
+</script>
+
 <style lang="scss" scoped>
-.footer {
-  background-color: #b3c0d1;
-  color: #333;
-  line-height: 60px;
+.el-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+  padding: 5em 0 0 0;
+  background: #131719;
+  margin-top: 50px;
 }
 </style>
