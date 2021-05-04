@@ -88,7 +88,7 @@ export default {
     padding: 1.19rem 1.37rem;
     min-width: 270px;
     letter-spacing: 0.1em;
-    color: #000;
+    color: $black;
     font-size: 16px;
     font-weight: 700;
   }

@@ -56,6 +56,15 @@ body {
   color: #2c3e50;
 }
 
+a {
+  font-weight: bold;
+  color: #2c3e50;
+
+  &.router-link-exact-active {
+    color: $green-100;
+  }
+}
+
 .el-header {
   padding: 0;
   height: auto !important;
@@ -63,21 +72,12 @@ body {
 
 .el-main {
   text-align: center;
-  padding-bottom: 200px;
+  padding-bottom: 100px;
 
   .el-backtop {
-    background-color: #5488c7;
-    color: #fff;
+    background-color: $blue-200;
+    color: $white;
     border-radius: 0.188rem;
-  }
-}
-
-a {
-  font-weight: bold;
-  color: #2c3e50;
-
-  &.router-link-exact-active {
-    color: #42b983;
   }
 }
 </style>

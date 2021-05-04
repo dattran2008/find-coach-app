@@ -31,7 +31,7 @@ export default {
     a {
       text-decoration: none;
       font-size: 15px;
-      color: #42b983;
+      color: $green-100;
     }
   }
   .header-icon {

@@ -1,6 +1,6 @@
 <template>
   <el-main>
-    <h1>Contact a coach</h1>
+    <h1 id="send">Contact a coach</h1>
     <contact-form @send-message="sendMessage" :success="success" />
   </el-main>
 </template>

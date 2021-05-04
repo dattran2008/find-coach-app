@@ -1,3 +1,5 @@
+@import '../global/variables';
+
 .el-loading-parent--relative {
   height: 200px;
 
@@ -8,7 +10,7 @@
 
 .el-input {
   &__suffix {
-    color: #42b983;
+    color: $green-100;
   }
 }
 

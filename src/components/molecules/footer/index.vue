@@ -30,10 +30,6 @@
             <p>
               Our service simply supply your needs with all the best coaches
             </p>
-            <a href="#">
-              read more
-              <i class="el-icon-right"></i>
-            </a>
           </el-col>
         </el-row>
       </el-col>
@@ -42,8 +38,8 @@
           <el-col :md="6" class="border-left">
             <h2 class="footer-heading">Discover</h2>
             <ul class="list-unstyled">
-              <li><a href="#" class="py-1 d-block">Buy &amp; Sell</a></li>
-              <li><a href="#" class="py-1 d-block">Merchant</a></li>
+              <li><a href="#" class="py-1 d-block">Hire &amp; Advertise</a></li>
+              <li><a href="#" class="py-1 d-block">Our Services</a></li>
               <li><a href="#" class="py-1 d-block">Giving back</a></li>
               <li><a href="#" class="py-1 d-block">Help &amp; Support</a></li>
             </ul>
@@ -51,9 +47,9 @@
           <el-col :md="6" class="border-left">
             <h2 class="footer-heading">About</h2>
             <ul class="list-unstyled">
-              <li><a href="#" class="py-1 d-block">Staff</a></li>
               <li><a href="#" class="py-1 d-block">Team</a></li>
               <li><a href="#" class="py-1 d-block">Careers</a></li>
+              <li><a href="#" class="py-1 d-block">Our goals</a></li>
               <li><a href="#" class="py-1 d-block">Blog</a></li>
             </ul>
           </el-col>
@@ -72,7 +68,7 @@
               <li><a href="#" class="py-1 d-block">Facebook</a></li>
               <li><a href="#" class="py-1 d-block">Twitter</a></li>
               <li><a href="#" class="py-1 d-block">Instagram</a></li>
-              <li><a href="#" class="py-1 d-block">Googleplus</a></li>
+              <li><a href="#" class="py-1 d-block">Youtube</a></li>
             </ul>
           </el-col>
         </el-row>
@@ -88,27 +84,19 @@
             <p class="partner-name mb-0">
               <a href="#">
                 <span class="ion-logo-ionic mr-2"></span>
-                Company 01
+                Udemy
               </a>
               <a href="#">
                 <span class="ion-logo-ionic mr-2"></span>
-                Company 02
+                Coursera
               </a>
               <a href="#">
                 <span class="ion-logo-ionic mr-2"></span>
-                Company 03
+                Edx
               </a>
               <a href="#">
                 <span class="ion-logo-ionic mr-2"></span>
-                Company 04
-              </a>
-              <a href="#">
-                <span class="ion-logo-ionic mr-2"></span>
-                Company 05
-              </a>
-              <a href="#">
-                <span class="ion-logo-ionic mr-2"></span>
-                Company 06
+                Tech Academy
               </a>
             </p>
           </el-col>
@@ -144,11 +132,15 @@
 
 <style lang="scss" scoped>
 .container {
-  background: #131719;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
+  max-width: 1140px;
+  padding: 0 15px;
+  margin: 0 auto;
+  line-height: 1.8;
+  font-size: 15px;
+
+  .d-block {
+    display: block;
+  }
 
   .mr-md-3 {
     margin-right: 1rem;
@@ -156,6 +148,10 @@
 
   .mt-5 {
     margin-top: 3rem;
+  }
+
+  .py-1 {
+    padding: 0.25rem 0;
   }
 
   .footer-heading {
@@ -167,10 +163,17 @@
       color: $white;
       text-transform: uppercase;
     }
+
+    a {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.4);
+    }
   }
 
   a {
-    color: $primary;
+    transition: 0.3s all ease;
+    text-decoration: none;
+    color: #bfa88e;
   }
 
   p {
@@ -183,9 +186,14 @@
   }
 
   .list-unstyled {
+    list-style: none;
+    padding-inline-start: 0;
+
     li {
       a {
         color: rgba(255, 255, 255, 0.4);
+        font-weight: 100;
+
         &:hover {
           color: $white;
         }
@@ -195,6 +203,7 @@
     a {
       text-decoration: none;
       color: rgba(255, 255, 255, 0.4);
+
       &:hover {
         color: $white;
       }
@@ -217,13 +226,14 @@
     border-radius: 40px;
     background: $white;
     padding: 3px;
-    -webkit-box-shadow: 0px -12px 21px -15px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0px -12px 21px -15px rgba(0, 0, 0, 0.1);
-    box-shadow: 0px -12px 21px -15px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px -12px 21px -15px rgb(0 0 0 / 10%);
+    box-shadow: 0px -12px 21px -15px rgb(0 0 0 / 10%);
+
     .form-group {
       position: relative;
       margin-bottom: 0;
       border-radius: 0px;
+
       input {
         background: transparent !important;
         border: none !important;
@@ -232,6 +242,7 @@
         font-size: 16px;
         height: 56px;
         border-radius: 0px;
+
         &::-webkit-input-placeholder {
           /* Chrome/Opera/Safari */
           color: rgba(0, 0, 0, 0.3) !important;
@@ -240,34 +251,41 @@
           /* Firefox 19+ */
           color: rgba(0, 0, 0, 0.3) !important;
         }
-        &:-ms-input-placeholder {
-          /* IE 10+ */
-          color: rgba(0, 0, 0, 0.3) !important;
-        }
-        &:-moz-placeholder {
-          /* Firefox 18- */
-          color: rgba(0, 0, 0, 0.3) !important;
-        }
+
         &:focus {
           outline: none !important;
           box-shadow: none;
         }
       }
+
+      .form-control {
+        display: block;
+        width: 100%;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+
+      .rounded-left {
+        padding: 0 0 0 15px;
+      }
+
       .submit {
         color: $white !important;
         display: block;
         width: 150px;
         height: 56px;
         font-size: 14px;
-        background: lighten($primary, 2%) !important;
+        background: #bfa88e !important;
         border: none;
         letter-spacing: 1px;
         text-transform: uppercase;
         border-radius: 40px;
+
         &:hover,
         &:focus {
           text-decoration: none !important;
           outline: none !important;
+          cursor: pointer;
         }
       }
     }
@@ -289,8 +307,13 @@
         font-size: 13px;
         text-transform: uppercase;
         color: rgba(255, 255, 255, 0.4);
+
         span {
           color: rgba(255, 255, 255, 1);
+        }
+
+        &:hover {
+          color: $teal;
         }
       }
     }
@@ -303,6 +326,7 @@
   .border-left {
     border-left: 1px solid #dee2e6;
     border-color: rgba(255, 255, 255, 0.05);
+    padding: 0 15px;
     // @include media-breakpoint-down(lg) {
     //   border: none;
     // }

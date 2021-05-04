@@ -83,7 +83,7 @@ export default {
 
 <style lang="scss" scoped>
 .time {
-  color: #71ace8;
+  color: $blue-100;
 }
 
 .bottom {

@@ -15,11 +15,11 @@ export default {
 <style lang="scss" scoped>
 .el-footer {
   position: absolute;
-  bottom: 0;
+  top: 100%;
   width: 100%;
-
-  padding: 5em 0 0 0;
-  background: #131719;
+  height: auto !important;
   margin-top: 50px;
+  padding: 5em 0 0 0;
+  background: $black-100;
 }
 </style>
