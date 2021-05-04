@@ -40,6 +40,8 @@ import {
   ElDropdownItem,
   ElDropdownMenu,
   ElAlert,
+  ElCarousel,
+  ElCarouselItem,
 } from 'element-plus';
 
 export default [
@@ -79,6 +81,8 @@ export default [
   ElDropdownItem,
   ElDropdownMenu,
   ElAlert,
+  ElCarousel,
+  ElCarouselItem,
 ];
 
 export const plugins = [
