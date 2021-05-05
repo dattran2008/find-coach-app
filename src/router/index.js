@@ -1,7 +1,5 @@
 /* eslint-disable implicit-arrow-linebreak */
 import { createRouter, createWebHistory } from 'vue-router';
-
-// VueX store
 import store from '@/store';
 
 // authentication
@@ -40,7 +38,17 @@ const routes = [
     props: true,
     children: [{ path: 'contact', component: ContactCoach }],
   },
-  { path: '/register', component: CoachRegister, meta: { requireAuth: true } },
+  {
+    path: '/register',
+    component: CoachRegister,
+    meta: { requireAuth: true },
+    // beforeEnter: () => {
+    //   if (store.getters.isCoach) {
+    //     return true;
+    //   }
+    //   return false;
+    // },
+  },
   {
     path: '/requests',
     component: RequestsReceived,
@@ -53,14 +61,18 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(to, _, savedPosition) {
     if (savedPosition) {
       return savedPosition;
     }
     if (to.hash) {
       return { el: to.hash, behavior: 'smooth' };
     }
-    return { x: 0, y: 0 };
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ left: 0, top: 0, behavior: 'smooth' });
+      }, 200);
+    });
   },
 });
 

@@ -12,6 +12,8 @@
       <i class="el-icon-star-on"></i>
     </el-divider>
     <div class="contact" v-if="selectedCoach">
+      <h1 class="title">Contact Us</h1>
+      <h3>Interested? Reach out now</h3>
       <router-link
         v-if="isShow"
         :to="`${route.path}/contact#send`"
@@ -19,8 +21,6 @@
       >
         <el-button plain v-if="isShow">Start Here</el-button>
       </router-link>
-      <h1 class="title">Contact Us</h1>
-      <h3>Interested? Reach out now</h3>
     </div>
     <router-view></router-view>
   </section>
@@ -45,12 +45,11 @@ export default {
     store.dispatch('coaches/fetchCoaches', { isRefresh: true });
 
     // filtered data
-    const selectedCoach = computed(() => {
-      const result = store.getters['coaches/coaches'].find(
-        (coach) => coach.id === props.id,
-      );
-      return result;
-    });
+    const selectedCoach = computed(
+      () => store.getters['coaches/getCoachById'](props.id),
+      // eslint-disable-next-line function-paren-newline
+    );
+
     const isShow = computed(() => store.getters['ui/show']);
 
     // Handle
@@ -64,9 +63,9 @@ export default {
     return {
       handleGoBack,
       isLoading,
-      selectedCoach,
       isShow,
       route,
+      selectedCoach,
     };
   },
 };

@@ -29,7 +29,7 @@
               <h3>Cost: ${{ selectedCoach.hourlyRate }}/hour</h3>
             </time>
             <el-rate
-              v-model="rating"
+              v-model="rate"
               disabled
               show-score
               text-color="#ff9900"
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, onBeforeUpdate, ref } from 'vue';
 import LoadingSpinner from '@/components/atoms/Loading.vue';
 
 export default {
@@ -71,11 +71,18 @@ export default {
     const areas = computed(() => props.selectedCoach.areas);
     const rating = computed(() => props.selectedCoach.rating);
 
+    const rate = ref(0);
+
+    onBeforeUpdate(() => {
+      rate.value = rating.value;
+    });
+
     return {
       fullName,
       areas,
       types,
       rating,
+      rate,
     };
   },
 };

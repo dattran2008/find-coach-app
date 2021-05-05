@@ -5,7 +5,10 @@
       <div class="card-header">
         <h3>{{ fullName }}</h3>
         <el-space size="medium">
-          <router-link :to="`${route.path}/${id}/contact#send`" tag="button">
+          <router-link
+            :to="`${route.path}/${id}/contact` + '#send'"
+            tag="button"
+          >
             <el-button type="primary" plain size="large" icon="el-icon-message">
             </el-button>
           </router-link>

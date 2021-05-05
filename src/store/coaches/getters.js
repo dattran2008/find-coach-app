@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 export default {
   coaches(state) {
     return state.coaches;
@@ -15,4 +16,6 @@ export default {
     const current = new Date().getTime();
     return (current - lastTime) / 1000 > 300; // greater than 5 minute -> auto update
   },
+  getCoachById: (state) => (id) =>
+    state.coaches.find((coach) => coach.id === id),
 };
