@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { computed, onBeforeUpdate, ref } from 'vue';
+import { computed, onUpdated, ref } from 'vue';
 import LoadingSpinner from '@/components/atoms/Loading.vue';
 
 export default {
@@ -64,16 +64,17 @@ export default {
   props: ['selectedCoach', 'isLoading'],
   setup(props) {
     const types = ['success', 'warning', 'danger', 'primary', ''];
+    const rate = ref(0);
 
     const fullName = computed(
       () => `${props.selectedCoach.firstName} ${props.selectedCoach.lastName}`,
     );
     const areas = computed(() => props.selectedCoach.areas);
-    const rating = computed(() => props.selectedCoach.rating);
+    const rating = computed(
+      () => props.selectedCoach && props.selectedCoach.rating,
+    );
 
-    const rate = ref(0);
-
-    onBeforeUpdate(() => {
+    onUpdated(() => {
       rate.value = rating.value;
     });
 
@@ -81,7 +82,6 @@ export default {
       fullName,
       areas,
       types,
-      rating,
       rate,
     };
   },

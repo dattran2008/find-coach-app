@@ -6,7 +6,7 @@
       :isLoading="isLoading"
       @go-back="handleGoBack"
     />
-    <el-divider>
+    <el-divider v-if="selectedCoach">
       <i class="el-icon-star-on"></i>
       <i class="el-icon-star-on"></i>
       <i class="el-icon-star-on"></i>

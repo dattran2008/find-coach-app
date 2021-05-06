@@ -42,12 +42,13 @@ const routes = [
     path: '/register',
     component: CoachRegister,
     meta: { requireAuth: true },
-    // beforeEnter: () => {
-    //   if (store.getters.isCoach) {
-    //     return true;
-    //   }
-    //   return false;
-    // },
+    async beforeEnter() {
+      await store.dispatch('coaches/fetchCoaches', { isRefresh: true });
+      if (store.getters['coaches/isCoach']) {
+        return '/coaches';
+      }
+      return true;
+    },
   },
   {
     path: '/requests',
@@ -76,13 +77,13 @@ const router = createRouter({
   },
 });
 
-router.beforeEach((to, _, next) => {
+// eslint-disable-next-line consistent-return
+router.beforeEach((to) => {
   if (to.meta.requireAuth && !store.getters.isAuthenticated) {
-    next('/auth');
-  } else if (to.meta.requireUnauth && store.getters.isAuthenticated) {
-    next('/coaches');
-  } else {
-    next();
+    return '/auth';
+  }
+  if (to.meta.requireUnauth && store.getters.isAuthenticated) {
+    return '/coaches';
   }
 });
 
