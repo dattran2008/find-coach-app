@@ -7,7 +7,7 @@
 - ### :hammer: **It is built on**:
   - [x] Frontend: Vue 3 Framework + Element Plus UI
   - [x] Backend: Firebase API
-
+- ### Demo: https://get-your-trainer.web.app
 ## Project setup
 
 ```
